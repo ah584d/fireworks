@@ -18,12 +18,13 @@
 
 ## Installation
 
-1. git clone git@github.com:ah584d/crs.git
-2. cd stkOverFlow
-3. npm ci -d
-4. cd ios
-5. pod install
-6. run Xcode and open ios folder, then press play button, it will take a few minutes and will launch the application
+1.make sure you run with node 18 and above
+2. git clone git@github.com:ah584d/fireworks.git
+3. cd fireworks
+4. npm ci -d
+5. cd ios
+6. pod install
+7. run Xcode and open ios folder, then press play button, it will take a few minutes and will launch the application
 
 ## Usage
 
