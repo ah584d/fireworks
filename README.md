@@ -1,8 +1,16 @@
-<img src="pictures/fire.png" align="right" width="100" height="100" style="background-color:white;"/>
+<img src="pictures/fire.png" align="right" style="background-color:white;"/>
 
-## CRS - stackoverflow feed app
-> A simple React-Native application to fetch stackoverflow user infos
+## Fireworks - Expenses Tracking app
+> A simple React-Native application to track expenses
 
+## Design
+1. create seed
+2. add state
+3. add navigation
+4. add TS compilation
+5. add modal
+6. add async storage
+7. add login page and stake navigation
 
 ## Features
 
