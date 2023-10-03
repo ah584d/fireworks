@@ -6,8 +6,8 @@ import {Spacing} from '../common/themes/spacing';
 import {FireButton} from '../components/buttons/FireButton';
 import {InputField} from '../components/inputField/InputField';
 import {ScreenParams, navRootStackName} from '../navigation/navigation.types';
-import { useFireStore } from '../state/store';
-import { LocalStorage } from '../state/store.types';
+import {useFireStore} from '../state/store';
+import {UserAccount} from '../state/store.types';
 
 interface WelcomeScreenProps {
   route?: RouteProp<ScreenParams, navRootStackName.WELCOME_SCREEN>;
@@ -21,7 +21,18 @@ export const WelcomeScreen = ({
   navigation,
 }: WelcomeScreenProps): ReactElement => {
   const [userName, setUserName] = useState('');
-  const accounts = useFireStore((state: LocalStorage) => state.accounts)
+  const {accounts, createAccount} = useFireStore(state => state) ?? {};
+
+  const onSubmit = (): void => {
+    const isAccountExisting = accounts.filter(
+      (account: UserAccount) => account.name === userName,
+    );
+    if (isAccountExisting.length === 0) {
+      createAccount(userName);
+    }
+
+    navigation?.navigate(navRootStackName.TABS_STACK, {userName});
+  };
 
   return (
     <View style={styles.container}>
@@ -37,9 +48,7 @@ export const WelcomeScreen = ({
       <View style={styles.buttonWrapper}>
         <FireButton
           label="Submit"
-          onPressedCB={() => {
-            navigation?.navigate(navRootStackName.TABS_STACK);
-          }}
+          onPressedCB={onSubmit}
           disabled={userName?.length === 0}
         />
       </View>

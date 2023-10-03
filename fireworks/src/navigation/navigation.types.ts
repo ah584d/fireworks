@@ -9,5 +9,5 @@ export type ScreenParams = {
   [navRootStackName.WELCOME_SCREEN]: undefined;
   [navRootStackName.HOME_SCREEN]: {user: string};
   [navRootStackName.PROFILE_SCREEN]: {user: string};
-  [navRootStackName.TABS_STACK]: undefined;
+  [navRootStackName.TABS_STACK]: {userName: string};
 };
