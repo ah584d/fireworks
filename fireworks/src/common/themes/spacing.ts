@@ -17,7 +17,7 @@ export const Spacing = {
   screenBottomPadding: 40,
   screenBottomPaddingAbsolute: 25,
   carouselSpaceBetweenCards: 10,
-  borderRadius: 8,
+  borderRadius: 50,
   bottomBar: 90,
   bottomBarAndroid: 70,
 };

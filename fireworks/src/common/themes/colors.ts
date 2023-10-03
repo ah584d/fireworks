@@ -2,7 +2,7 @@ export const mainColors = {
   BLACK: '#040505',
   GRAY: '#737373',
   DISABLED: '#AFAFAF',
-  GRAY_LIGHT_: '#BEC0C2',
+  GRAY_LIGHT: '#BEC0C2',
   GRAY_EXTRA_LIGHT: '#D9DCDE',
   GRAY_MEDIUM: '#A5A7A8',
   WHITE: '#FFFFFF',
@@ -15,4 +15,5 @@ export const mainColors = {
   PRIMARY: '#FFCC2E',
   PRIMARY_OPACITY: '#FFCC2E59',
   PRIMARY_LIGHT: '#FFF7E0',
+  PURPLE: '#7B68EE',
 } as const;

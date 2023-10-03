@@ -1,7 +1,10 @@
-import React, {ReactElement} from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import React, {ReactElement, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {Spacing} from '../common/themes/spacing';
+import {FireButton} from '../components/buttons/FireButton';
+import {InputField} from '../components/inputField/InputField';
 import {ScreenParams, navRootStackName} from '../navigation/navigation.types';
 
 interface WelcomeScreenProps {
@@ -15,15 +18,28 @@ interface WelcomeScreenProps {
 export const WelcomeScreen = ({
   navigation,
 }: WelcomeScreenProps): ReactElement => {
+  const [userName, setUserName] = useState('');
+
   return (
     <View style={styles.container}>
-      <Text>login</Text>
-      <Button
-        title="Go to Jane's profile"
-        onPress={() => {
-          navigation?.navigate(navRootStackName.TABS_STACK);
-        }}
-      />
+      <View style={styles.contentWrapper}>
+        <InputField
+          onTextChanged={value => {
+            console.log(value);
+            setUserName(value);
+          }}
+          value={userName}
+        />
+      </View>
+      <View style={styles.buttonWrapper}>
+        <FireButton
+          label="Submit"
+          onPressedCB={() => {
+            navigation?.navigate(navRootStackName.TABS_STACK);
+          }}
+          disabled={userName?.length === 0}
+        />
+      </View>
     </View>
   );
 };
@@ -32,6 +48,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    marginHorizontal: Spacing.s48,
+  },
+  contentWrapper: {
+    justifyContent: 'flex-end',
+    width: '100%',
+    flex: 0.5,
+  },
+  buttonWrapper: {
+    flex: 0.1,
   },
 });
