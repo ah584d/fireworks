@@ -1,4 +1,4 @@
-<img src="pictures/fire.png" align="right" style="background-color:white;"/>
+<img src="pictures/fire.png" align="right" width="195" height="258" style="background-color:white;"/>
 
 ## Fireworks - Expenses Tracking app
 > A simple React-Native application to track expenses
