@@ -6,6 +6,8 @@ import {Spacing} from '../common/themes/spacing';
 import {FireButton} from '../components/buttons/FireButton';
 import {InputField} from '../components/inputField/InputField';
 import {ScreenParams, navRootStackName} from '../navigation/navigation.types';
+import { useFireStore } from '../state/store';
+import { LocalStorage } from '../state/store.types';
 
 interface WelcomeScreenProps {
   route?: RouteProp<ScreenParams, navRootStackName.WELCOME_SCREEN>;
@@ -19,6 +21,7 @@ export const WelcomeScreen = ({
   navigation,
 }: WelcomeScreenProps): ReactElement => {
   const [userName, setUserName] = useState('');
+  const accounts = useFireStore((state: LocalStorage) => state.accounts)
 
   return (
     <View style={styles.container}>
