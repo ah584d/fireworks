@@ -36,8 +36,7 @@
 
 ## Usage
 
-In order to test: type user id 1234567 (and change typing speed to test debouncing)
-
+Tested on iPhone simulator ** only ** [ I don't have iphone device ]
 
 ## Backlog
 
