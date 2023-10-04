@@ -6,8 +6,8 @@ export enum navRootStackName {
 }
 
 export type ScreenParams = {
-  [navRootStackName.WELCOME_SCREEN]: never;
-  [navRootStackName.HOME_SCREEN]: {userName: string};
-  [navRootStackName.PROFILE_SCREEN]: {userName: string};
+  [navRootStackName.WELCOME_SCREEN]: undefined;
+  [navRootStackName.HOME_SCREEN]: undefined;
+  [navRootStackName.PROFILE_SCREEN]: undefined;
   [navRootStackName.TABS_STACK]: {userName: string};
 };

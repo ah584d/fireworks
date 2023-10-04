@@ -42,8 +42,8 @@ export const TabsNavigation = ({route}: TabsNavigationProps): React.ReactElement
         tabBarActiveTintColor: mainColors.PURPLE,
         tabBarInactiveTintColor: mainColors.GRAY_DARK,
       })}>
-      <Tab.Screen name={navRootStackName.HOME_SCREEN} component={HomeScreen} initialParams={{userName}} options={{headerTitle: userName}} />
-      <Tab.Screen name={navRootStackName.PROFILE_SCREEN} component={ProfileScreen} initialParams={{userName}} options={{headerTitle: userName}} />
+      <Tab.Screen name={navRootStackName.HOME_SCREEN} component={HomeScreen} options={{headerTitle: userName}} />
+      <Tab.Screen name={navRootStackName.PROFILE_SCREEN} component={ProfileScreen} options={{headerTitle: userName}} />
     </Tab.Navigator>
   );
 };

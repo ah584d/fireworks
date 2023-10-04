@@ -10,6 +10,7 @@ export interface FireStoreType {
   addTransaction: (transaction: Transaction) => void;
   editTransaction: (name: string, date: Date, amount: number, id: number) => void;
   deleteTransaction: (id: number) => void;
+  resetAccount:(userName: string) => void;
 }
 
 export const useFireStore = create<FireStoreType>(set => ({
@@ -36,6 +37,7 @@ export const useFireStore = create<FireStoreType>(set => ({
     set((state: FireStoreType) => {
       const updatedAccount = {...state.account};
       updatedAccount.transactions.push({name, date, amount, id: getRandomUUID()});
+      updatedAccount.total = updatedAccount.total + (amount ?? 0);
 
       return {
         account: updatedAccount,

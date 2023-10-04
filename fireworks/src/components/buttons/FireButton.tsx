@@ -1,19 +1,21 @@
 import React, {FC} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle} from 'react-native';
 import {mainColors} from '../../common/themes/colors';
 import {Spacing} from '../../common/themes/spacing';
 
 interface FireButtonProps {
   label: string;
-  onPressedCB(): void;
+  onPressed(): void;
   disabled?: boolean;
+  customStyle?: StyleProp<ViewStyle>;
+  labelCustomStyle?: StyleProp<TextStyle>;
 }
 
-export const FireButton: FC<FireButtonProps> = ({label, onPressedCB, disabled = false}) => {
+export const FireButton: FC<FireButtonProps> = ({label, onPressed, disabled = false, customStyle, labelCustomStyle}) => {
   return (
-    <TouchableOpacity style={[styles.container, {opacity: disabled ? 0.5 : 1}]} onPress={onPressedCB} accessibilityRole={'button'} disabled={disabled} accessibilityLabel={label}>
+    <TouchableOpacity style={[styles.container, {opacity: disabled ? 0.5 : 1}, customStyle]} onPress={onPressed} accessibilityRole={'button'} disabled={disabled} accessibilityLabel={label}>
       <View>
-        <Text style={styles.textStyle}>{label}</Text>
+        <Text style={[styles.textStyle, labelCustomStyle]}>{label}</Text>
       </View>
     </TouchableOpacity>
   );

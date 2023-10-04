@@ -2,7 +2,6 @@ import React, {FC, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Spacing} from '../../common/themes/spacing';
 import {isTransactionComplete} from '../../common/utils/bl.utils';
-import {getRandomUUID} from '../../common/utils/numbers.utils';
 import {Transaction} from '../../state/store.types';
 import {TransactionType} from '../../types/common.types';
 import {FireButton} from '../buttons/FireButton';
@@ -15,7 +14,7 @@ interface ExpenseProps {
 }
 
 export const Expense: FC<ExpenseProps> = ({onButtonPressed, transaction, transactionType}) => {
-  const [expense, setExpense] = useState<Transaction>({amount: undefined, id: getRandomUUID(), name: undefined, date: undefined});
+  const [expense, setExpense] = useState<Transaction>({} as Transaction);
 
   const {name, amount, date} = transaction ?? {};
 
@@ -29,8 +28,8 @@ export const Expense: FC<ExpenseProps> = ({onButtonPressed, transaction, transac
         <InputField onTextChanged={value => setExpense(previous => ({...previous, amount: +value}))} value={amount?.toString()} textHint={'Amount'} />
         <InputField onTextChanged={value => setExpense(previous => ({...previous, date: new Date(value)}))} value={date?.toDateString()} textHint={'Date'} />
       </View>
-{/* disabled={!isTransactionComplete(expense)} */}
-      <FireButton label={transactionType === 'adding' ? 'Create' : 'Save'} onPressedCB={() => onButtonPressed(expense)}  />
+      {/* disabled={!isTransactionComplete(expense)} */}
+      <FireButton label={transactionType === 'adding' ? 'Create' : 'Save'} onPressed={() => onButtonPressed(expense)} />
     </View>
   );
 };

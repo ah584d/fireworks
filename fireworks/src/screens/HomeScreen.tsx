@@ -5,7 +5,6 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {SCREEN_HEIGHT} from '../common/infra/infra.consts';
 import {Spacing} from '../common/themes/spacing';
-import {getMyAccount} from '../common/utils/bl.utils';
 import {FireButton} from '../components/buttons/FireButton';
 import {Expense} from '../components/modal/Expense';
 import {ScreenParams, navRootStackName} from '../navigation/navigation.types';
@@ -17,9 +16,8 @@ interface HomeScreenProps {
   navigation?: NativeStackNavigationProp<ScreenParams, navRootStackName.HOME_SCREEN>;
 }
 
-export const HomeScreen = ({route}: HomeScreenProps): ReactElement => {
+export const HomeScreen = ({}: HomeScreenProps): ReactElement => {
   const {account, addTransaction} = useFireStore(state => state) ?? {};
-  const userNameNavParam = route?.params?.userName;
   const refRBSheet = useRef<RBSheet | null>(null);
 
   console.log(`====> DEBUG account: `, account);
@@ -30,6 +28,7 @@ export const HomeScreen = ({route}: HomeScreenProps): ReactElement => {
   const onButtonPressedCB = (transaction: Transaction): void => {
     console.log(`====> DEBUG transaction: `, transaction);
     addTransaction(transaction);
+    refRBSheet.current?.close();
   };
 
   const renderTotal = (): ReactElement => (
@@ -61,7 +60,7 @@ export const HomeScreen = ({route}: HomeScreenProps): ReactElement => {
         <Expense transactionType="adding" onButtonPressed={onButtonPressedCB} />
       </RBSheet>
 
-      <FireButton label="+" onPressedCB={openModal} />
+      <FireButton label="+" onPressed={openModal} />
     </SafeAreaView>
   );
 };

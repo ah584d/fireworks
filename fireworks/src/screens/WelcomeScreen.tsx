@@ -1,6 +1,6 @@
 import React, {ReactElement, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {RouteProp} from '@react-navigation/native';
+import {RouteProp, useFocusEffect} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {Spacing} from '../common/themes/spacing';
 import {FireButton} from '../components/buttons/FireButton';
@@ -8,7 +8,7 @@ import {InputField} from '../components/inputField/InputField';
 import {ScreenParams, navRootStackName} from '../navigation/navigation.types';
 import {hasUserName, retrieveUserData} from '../state/persistantStorage';
 import {useFireStore} from '../state/store';
-import { UserAccount } from '../state/store.types';
+import {UserAccount} from '../state/store.types';
 
 interface WelcomeScreenProps {
   route?: RouteProp<ScreenParams, navRootStackName.WELCOME_SCREEN>;
@@ -18,6 +18,12 @@ interface WelcomeScreenProps {
 export const WelcomeScreen = ({navigation}: WelcomeScreenProps): ReactElement => {
   const [userName, setUserName] = useState('');
   const {setCurrentAccount, createAccount} = useFireStore(state => state) ?? {};
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setUserName('');
+    }, [])
+  );
 
   const onSubmit = (): void => {
     if (hasUserName(userName)) {
@@ -44,7 +50,7 @@ export const WelcomeScreen = ({navigation}: WelcomeScreenProps): ReactElement =>
         />
       </View>
       <View style={styles.buttonWrapper}>
-        <FireButton label="Submit" onPressedCB={onSubmit} disabled={userName?.length === 0} />
+        <FireButton label="Submit" onPressed={onSubmit} disabled={userName?.length === 0} />
       </View>
     </View>
   );
