@@ -5,11 +5,15 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {SCREEN_HEIGHT} from '../common/infra/infra.consts';
 import {Spacing} from '../common/themes/spacing';
+import {getAggregatedDate} from '../common/utils/bl.utils';
 import {FireButton} from '../components/buttons/FireButton';
+import {FloatingButton} from '../components/buttons/FloatingButton';
 import {Expense} from '../components/modal/Expense';
+import {Table} from '../components/table/Table';
 import {ScreenParams, navRootStackName} from '../navigation/navigation.types';
 import {useFireStore} from '../state/store';
 import {Transaction} from '../state/store.types';
+import { mainColors } from '../common/themes/colors';
 
 interface HomeScreenProps {
   route?: RouteProp<ScreenParams, navRootStackName.HOME_SCREEN>;
@@ -20,29 +24,36 @@ export const HomeScreen = ({}: HomeScreenProps): ReactElement => {
   const {account, addTransaction} = useFireStore(state => state) ?? {};
   const refRBSheet = useRef<RBSheet | null>(null);
 
-  console.log(`====> DEBUG account: `, account);
+  const aggregatedData = getAggregatedDate(account.transactions);
+
+  console.log(`====> DEBUG account: `, account, JSON.stringify(aggregatedData, null, 2));
   const openModal = (): void => {
     refRBSheet.current?.open();
   };
 
   const onButtonPressedCB = (transaction: Transaction): void => {
-    console.log(`====> DEBUG transaction: `, transaction);
     addTransaction(account?.name, transaction);
     refRBSheet.current?.close();
   };
 
-  const renderTotal = (): ReactElement => (
-    <View style={styles.totalWrapper}>
-      <Text>
-        <Text style={styles.labelTotal}>Total Expenses: </Text>
-        <Text style={styles.labelAmount}>$ {account.total ?? 0}</Text>
-      </Text>
+  const renderTop = (): ReactElement => (
+    <View style={styles.topWrapper}>
+      <View style={styles.totalWrapper}>
+        <Text>
+          <Text style={styles.labelTotal}>Total Expenses: </Text>
+          <Text style={styles.labelAmount}>$ {account.total ?? 0}</Text>
+        </Text>
+      </View>
+      <View style={styles.filtersWrapper}>
+        <FireButton label="Filters" onPressed={() => undefined} customStyle={{backgroundColor: mainColors.GRAY_EXTRA_LIGHT, borderColor: mainColors.GRAY}} labelCustomStyle={{color: undefined}}/>
+      </View>
     </View>
   );
 
   return (
     <SafeAreaView style={styles.container}>
-      {renderTotal()}
+      {renderTop()}
+
       <RBSheet
         ref={refRBSheet}
         height={SCREEN_HEIGHT * 0.92}
@@ -60,7 +71,8 @@ export const HomeScreen = ({}: HomeScreenProps): ReactElement => {
         <Expense transactionType="adding" onButtonPressed={onButtonPressedCB} />
       </RBSheet>
 
-      <FireButton label="+" onPressed={openModal} />
+      <Table aggregatedTransactions={aggregatedData} />
+      <FloatingButton label="+" onPressed={openModal}/>
     </SafeAreaView>
   );
 };
@@ -68,16 +80,28 @@ export const HomeScreen = ({}: HomeScreenProps): ReactElement => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    borderWidth: 1,
+    //borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: 50,
-    marginHorizontal: Spacing.gutter,
+    marginTop: Spacing.s32,
+  },
+  topWrapper: {
+    width: '100%',
+    //borderWidth: 1,
+    paddingHorizontal: Spacing.gutter,
+    marginBottom: Spacing.s32,
   },
   totalWrapper: {
     width: '100%',
-    borderWidth: 1,
+    //borderWidth: 1,
     alignItems: 'flex-start',
+    marginBottom: Spacing.s24,
+  },
+  filtersWrapper: {
+    width: '100%',
+    //borderWidth: 1,
+    alignItems: 'flex-end',
+    marginBottom: Spacing.s24,
   },
   labelTotal: {
     fontWeight: '700',
@@ -86,5 +110,4 @@ const styles = StyleSheet.create({
   labelAmount: {
     fontSize: 20,
   },
-  total: {},
 });

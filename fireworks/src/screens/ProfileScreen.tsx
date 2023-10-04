@@ -24,7 +24,7 @@ export const ProfileScreen = ({navigation}: ProfileScreenProps): ReactElement =>
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.wrapper}>
-        <Text style={styles.label}>Total Expenses Items</Text>
+        <Text style={styles.label}>Total Expenses Item(s)</Text>
         <Text style={styles.amount}>{account.transactions?.length}</Text>
       </View>
       <View style={styles.wrapper}>
@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: Spacing.s40,
-
     borderBottomWidth: 1,
     borderColor: mainColors.GRAY_LIGHT,
   },

@@ -8,6 +8,11 @@ export interface UserAccount {
 export interface Transaction {
   id: number;
   name: string | undefined;
-  date: Date | undefined;
+  date: string | undefined;
   amount: number | undefined;
+}
+
+export interface AggregatedTransactions {
+  date: string;
+  transactions: Transaction[];
 }

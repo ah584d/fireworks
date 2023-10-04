@@ -1,11 +1,11 @@
-import React, {FC, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {FC, useEffect, useState} from 'react';
+import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {mainColors} from '../../common/themes/colors';
 import {Spacing} from '../../common/themes/spacing';
-import {isTransactionComplete} from '../../common/utils/bl.utils';
+import {stringToDateString} from '../../common/utils/date.utils';
 import {Transaction} from '../../state/store.types';
 import {TransactionType} from '../../types/common.types';
 import {FireButton} from '../buttons/FireButton';
-import {InputField} from '../inputField/InputField';
 
 interface ExpenseProps {
   onButtonPressed: (expense: Transaction) => void;
@@ -17,18 +17,24 @@ export const Expense: FC<ExpenseProps> = ({onButtonPressed, transaction, transac
   const [expense, setExpense] = useState<Transaction>({} as Transaction);
 
   const {name, amount, date} = transaction ?? {};
-
-  // console.log(`====> DEBUG isTransactionComplete: `, isTransactionComplete(expense));
+  useEffect(() => {
+    setExpense(previous => ({...previous, date: new Date().toDateString()}));
+  }, []);
 
   return (
     <View style={styles.container}>
       <View style={styles.form}>
         <Text style={styles.title}>Create Expense</Text>
-        <InputField onTextChanged={value => setExpense(previous => ({...previous, name: value}))} value={name} textHint={'Title'} />
-        <InputField onTextChanged={value => setExpense(previous => ({...previous, amount: +value}))} value={amount?.toString()} textHint={'Amount'} />
-        <InputField onTextChanged={value => setExpense(previous => ({...previous, date: new Date(value)}))} value={date?.toDateString()} textHint={'Date'} />
+        <View style={styles.formRow}>
+          <TextInput style={{}} editable onChangeText={(updatedValue: string) => setExpense(previous => ({...previous, name: updatedValue}))} placeholder={'Title'} keyboardType={'default'} value={name} />
+        </View>
+        <View style={styles.formRow}>
+          <TextInput style={{}} editable onChangeText={(updatedValue: string) => setExpense(previous => ({...previous, amount: +updatedValue}))} placeholder={'Amount'} keyboardType={'default'} value={amount?.toString()} />
+        </View>
+        <View style={styles.formRow}>
+          <TextInput style={{}} editable onChangeText={(updatedValue: string) => setExpense(previous => ({...previous, date: stringToDateString(updatedValue)}))} placeholder={'Date'} keyboardType={'default'} value={date} />
+        </View>
       </View>
-      {/* disabled={!isTransactionComplete(expense)} */}
       <FireButton label={transactionType === 'adding' ? 'Create' : 'Save'} onPressed={() => onButtonPressed(expense)} />
     </View>
   );
@@ -37,7 +43,7 @@ export const Expense: FC<ExpenseProps> = ({onButtonPressed, transaction, transac
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    borderWidth: 1,
+    //borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
     marginTop: Spacing.s32,
@@ -50,10 +56,16 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   form: {
-    borderWidth: 1,
+    //borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
     flex: 0.5,
+  },
+  formRow: {
+    paddingVertical: Spacing.s12,
+    width: '100%',
+    borderBottomWidth: 1,
+    borderBottomColor: mainColors.GRAY_EXTRA_LIGHT,
   },
 });
