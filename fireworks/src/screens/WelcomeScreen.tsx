@@ -6,8 +6,9 @@ import {Spacing} from '../common/themes/spacing';
 import {FireButton} from '../components/buttons/FireButton';
 import {InputField} from '../components/inputField/InputField';
 import {ScreenParams, navRootStackName} from '../navigation/navigation.types';
+import {hasUserName, retrieveUserData} from '../state/persistantStorage';
 import {useFireStore} from '../state/store';
-import {UserAccount} from '../state/store.types';
+import { UserAccount } from '../state/store.types';
 
 interface WelcomeScreenProps {
   route?: RouteProp<ScreenParams, navRootStackName.WELCOME_SCREEN>;
@@ -16,11 +17,15 @@ interface WelcomeScreenProps {
 
 export const WelcomeScreen = ({navigation}: WelcomeScreenProps): ReactElement => {
   const [userName, setUserName] = useState('');
-  const {accounts, createAccount} = useFireStore(state => state) ?? {};
+  const {setCurrentAccount, createAccount} = useFireStore(state => state) ?? {};
 
   const onSubmit = (): void => {
-    const isAccountExisting = accounts.filter((account: UserAccount) => account.name === userName);
-    if (isAccountExisting.length === 0) {
+    if (hasUserName(userName)) {
+      console.log(`====> DEBUG userName exists: `, userName);
+      const userFromStorage = retrieveUserData<UserAccount>(userName);
+      setCurrentAccount(userFromStorage);
+    } else {
+      console.log(`====> DEBUG userName does not exists: `, userName);
       createAccount(userName);
     }
 

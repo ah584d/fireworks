@@ -18,12 +18,11 @@ interface HomeScreenProps {
 }
 
 export const HomeScreen = ({route}: HomeScreenProps): ReactElement => {
-  const {accounts, addTransaction} = useFireStore(state => state) ?? {};
-  const userNameParam = route?.params?.userName;
+  const {account, addTransaction} = useFireStore(state => state) ?? {};
+  const userNameNavParam = route?.params?.userName;
   const refRBSheet = useRef<RBSheet | null>(null);
 
-  const myAccount = getMyAccount(accounts, userNameParam);
-
+  console.log(`====> DEBUG account: `, account);
   const openModal = (): void => {
     refRBSheet.current?.open();
   };
@@ -37,7 +36,7 @@ export const HomeScreen = ({route}: HomeScreenProps): ReactElement => {
     <View style={styles.totalWrapper}>
       <Text>
         <Text style={styles.labelTotal}>Total Expenses: </Text>
-        <Text style={styles.labelAmount}>${myAccount.total}</Text>
+        <Text style={styles.labelAmount}>$ {account.total}</Text>
       </Text>
     </View>
   );

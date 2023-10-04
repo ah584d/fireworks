@@ -1,71 +1,81 @@
 import {create} from 'zustand';
 import {getRandomUUID} from '../common/utils/numbers.utils';
-import {LocalStorage, Transaction, UserAccount} from './store.types';
+import {deleteAccount, storeUser} from './persistantStorage';
+import {Transaction, UserAccount} from './store.types';
 
 export interface FireStoreType {
-  accounts: UserAccount[];
+  account: UserAccount;
+  setCurrentAccount: (userAccount: UserAccount) => void;
   createAccount: (name: string) => void;
   addTransaction: (transaction: Transaction) => void;
   editTransaction: (name: string, date: Date, amount: number, id: number) => void;
-  deleteTransaction: (name: string, id: number) => void;
+  deleteTransaction: (id: number) => void;
 }
 
 export const useFireStore = create<FireStoreType>(set => ({
-  accounts: [] as unknown as LocalStorage,
+  account: {} as unknown as UserAccount,
+
+  setCurrentAccount: (userAccount: UserAccount) =>
+    set(() => {
+      return {
+        account: userAccount,
+      };
+    }),
 
   createAccount: (name: string) =>
-    set((state: FireStoreType) => {
-      const newState = [...state.accounts];
-      newState.push({name, total: 0, transactions: []});
+    set(() => {
+      const newAccount = {id: getRandomUUID(), name, total: 0, transactions: []};
+      storeUser(name, newAccount);
+
       return {
-        accounts: newState,
+        account: newAccount,
       };
     }),
 
   addTransaction: ({name, date, amount}: Transaction) =>
     set((state: FireStoreType) => {
-      const newState = [...state.accounts].map(account => {
-        if (account?.name === name) {
-          account.transactions.push({name, date, amount, id: getRandomUUID()});
-        }
-        return account;
-      });
+      const updatedAccount = {...state.account};
+      updatedAccount.transactions.push({name, date, amount, id: getRandomUUID()});
 
       return {
-        accounts: newState,
+        account: updatedAccount,
       };
     }),
 
   editTransaction: (name: string, date: Date, amount: number, id: number) =>
     set((state: FireStoreType) => {
-      const newState = [...state.accounts].map(account => {
-        if (account.name === name) {
-          account.transactions = account.transactions.filter((transaction: Transaction) => {
-            if (transaction.id === id) {
-              return {date, amount, id};
-            }
-          });
+      const updatedAccount = {...state.account};
+
+      updatedAccount.transactions.filter((transaction: Transaction) => {
+        if (transaction.id === id) {
+          return {name, date, amount, id};
+        } else {
+          return transaction;
         }
-        return account;
       });
 
       return {
-        accounts: newState,
+        account: updatedAccount,
       };
     }),
 
-  deleteTransaction: (name: string, id: number) =>
+  deleteTransaction: (id: number) =>
     set((state: FireStoreType) => {
-      const newState = [...state.accounts].map(account => {
-        if (account.name === name) {
-          account.transactions = account.transactions.filter((transaction: Transaction) => transaction.id !== id);
-        }
-        return account;
-      });
+      const updatedAccount = {...state.account};
+
+      updatedAccount.transactions.filter((transaction: Transaction) => transaction.id !== id);
 
       return {
-        accounts: newState,
+        account: updatedAccount,
       };
     }),
-  resetAccounts: () => set({accounts: []}),
+
+  resetAccount: (userName: string) =>
+    set(() => {
+      deleteAccount(userName);
+
+      return {
+        account: {} as UserAccount,
+      };
+    }),
 }));

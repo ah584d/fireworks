@@ -1,5 +1,5 @@
-export type LocalStorage = UserAccount[];
 export interface UserAccount {
+  id: number;
   name: string;
   total: number;
   transactions: Transaction[];

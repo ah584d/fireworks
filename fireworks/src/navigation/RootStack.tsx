@@ -17,13 +17,7 @@ export const RootStackContainer: FC<RootTabStackContainerProps> = () => (
     screenOptions={{
       headerShown: false,
     }}>
-    <RootStack.Screen
-      name={navRootStackName.WELCOME_SCREEN}
-      component={WelcomeScreen}
-    />
-    <RootStack.Screen
-      name={navRootStackName.TABS_STACK}
-      component={TabsNavigation}
-    />
+    <RootStack.Screen name={navRootStackName.WELCOME_SCREEN} component={WelcomeScreen} />
+    <RootStack.Screen name={navRootStackName.TABS_STACK} component={TabsNavigation}  />
   </RootStack.Navigator>
 );
