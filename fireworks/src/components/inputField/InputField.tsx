@@ -1,4 +1,4 @@
-import React, {FC, ReactElement} from 'react';
+import React, {FC} from 'react';
 import {StyleSheet, TextInput, View} from 'react-native';
 import {mainColors} from '../../common/themes/colors';
 import {styleShadow} from '../../common/themes/commonStyles';
@@ -6,13 +6,11 @@ import {Spacing} from '../../common/themes/spacing';
 
 export interface InputFieldProps {
   onTextChanged: (value: string) => void;
-  value: string;
+  value: string | undefined;
+  textHint?: string;
 }
 
-export const InputField: FC<InputFieldProps> = ({
-  onTextChanged,
-  value,
-}): ReactElement => {
+export const InputField: FC<InputFieldProps> = ({onTextChanged, value, textHint}) => {
   return (
     <View style={[styles.container, styleShadow]}>
       <TextInput
@@ -21,7 +19,7 @@ export const InputField: FC<InputFieldProps> = ({
         onChangeText={(updatedValue: string) => {
           onTextChanged(updatedValue);
         }}
-        placeholder={'Enter Name'}
+        placeholder={textHint}
         keyboardType={'default'}
         value={value}
       />

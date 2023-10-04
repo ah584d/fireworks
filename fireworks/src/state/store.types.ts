@@ -7,6 +7,7 @@ export interface UserAccount {
 
 export interface Transaction {
   id: number;
-  date: Date;
-  amount: number;
+  name: string | undefined;
+  date: Date | undefined;
+  amount: number | undefined;
 }

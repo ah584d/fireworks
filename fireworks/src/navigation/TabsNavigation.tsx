@@ -1,16 +1,17 @@
 import React from 'react';
 import {View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {RouteProp} from '@react-navigation/native';
 import SVGHome from '../assets/svg/menu-home.svg';
 import SVGProfile from '../assets/svg/menu-profile.svg';
 import {mainColors} from '../common/themes/colors';
 import {HomeScreen} from '../screens/HomeScreen';
 import {ProfileScreen} from '../screens/ProfileScreen';
-import {navRootStackName} from './navigation.types';
+import {ScreenParams, navRootStackName} from './navigation.types';
 
-const tabBarIcon = (focused: boolean, route: string): any => {
-  // TODO avraham to fix
+const tabBarIcon = (focused: boolean, route: string): JSX.Element => {
   let SvgNavIcon = focused ? <SVGHome /> : <SVGHome />;
+
   switch (route) {
     case navRootStackName.HOME_SCREEN:
       SvgNavIcon = focused ? <SVGHome /> : <SVGHome />;
@@ -19,8 +20,6 @@ const tabBarIcon = (focused: boolean, route: string): any => {
       SvgNavIcon = focused ? <SVGProfile /> : <SVGProfile />;
       break;
     default:
-      SvgNavIcon = focused ? <SVGHome /> : <SVGHome />;
-
       break;
   }
   return <View>{SvgNavIcon}</View>;
@@ -28,20 +27,30 @@ const tabBarIcon = (focused: boolean, route: string): any => {
 
 const Tab = createBottomTabNavigator();
 
-export const TabsNavigation = (): React.ReactElement => {
+interface TabsNavigationProps {
+  route?: RouteProp<ScreenParams, navRootStackName.TABS_STACK>;
+}
+
+export const TabsNavigation = ({route}: TabsNavigationProps): React.ReactElement => {
+  const userName = route?.params?.userName;
   return (
     <Tab.Navigator
-      screenOptions={({route}) => ({
+      screenOptions={({route: routeParam}) => ({
         headerShown: false,
         tabBarStyle: {},
-        tabBarIcon: ({focused}) => tabBarIcon(focused, route?.name),
-        tabBarActiveTintColor: mainColors.PRIMARY_DARK,
+        tabBarIcon: ({focused}) => tabBarIcon(focused, routeParam?.name),
+        tabBarActiveTintColor: mainColors.PURPLE,
         tabBarInactiveTintColor: mainColors.GRAY_DARK,
       })}>
-      <Tab.Screen name={navRootStackName.HOME_SCREEN} component={HomeScreen} />
+      <Tab.Screen
+        name={navRootStackName.HOME_SCREEN}
+        component={HomeScreen}
+        initialParams={{userName}}
+      />
       <Tab.Screen
         name={navRootStackName.PROFILE_SCREEN}
         component={ProfileScreen}
+        initialParams={{userName}}
       />
     </Tab.Navigator>
   );

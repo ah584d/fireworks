@@ -5,13 +5,8 @@ import {LocalStorage, Transaction, UserAccount} from './store.types';
 export interface FireStoreType {
   accounts: UserAccount[];
   createAccount: (name: string) => void;
-  addTransaction: (name: string, date: Date, amount: number) => void;
-  editTransaction: (
-    name: string,
-    date: Date,
-    amount: number,
-    id: number,
-  ) => void;
+  addTransaction: (transaction: Transaction) => void;
+  editTransaction: (name: string, date: Date, amount: number, id: number) => void;
   deleteTransaction: (name: string, id: number) => void;
 }
 
@@ -27,11 +22,11 @@ export const useFireStore = create<FireStoreType>(set => ({
       };
     }),
 
-  addTransaction: (name: string, date: Date, amount: number) =>
+  addTransaction: ({name, date, amount}: Transaction) =>
     set((state: FireStoreType) => {
       const newState = [...state.accounts].map(account => {
-        if (account.name === name) {
-          account.transactions.push({date, amount, id: getRandomUUID()});
+        if (account?.name === name) {
+          account.transactions.push({name, date, amount, id: getRandomUUID()});
         }
         return account;
       });
@@ -45,13 +40,11 @@ export const useFireStore = create<FireStoreType>(set => ({
     set((state: FireStoreType) => {
       const newState = [...state.accounts].map(account => {
         if (account.name === name) {
-          account.transactions = account.transactions.filter(
-            (transaction: Transaction) => {
-              if (transaction.id === id) {
-                return {date, amount, id};
-              }
-            },
-          );
+          account.transactions = account.transactions.filter((transaction: Transaction) => {
+            if (transaction.id === id) {
+              return {date, amount, id};
+            }
+          });
         }
         return account;
       });
@@ -65,9 +58,7 @@ export const useFireStore = create<FireStoreType>(set => ({
     set((state: FireStoreType) => {
       const newState = [...state.accounts].map(account => {
         if (account.name === name) {
-          account.transactions = account.transactions.filter(
-            (transaction: Transaction) => transaction.id !== id,
-          );
+          account.transactions = account.transactions.filter((transaction: Transaction) => transaction.id !== id);
         }
         return account;
       });

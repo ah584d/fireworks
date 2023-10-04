@@ -1,5 +1,5 @@
 import React, {ReactElement} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {SafeAreaView, StyleSheet, Text} from 'react-native';
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {ScreenParams, navRootStackName} from '../navigation/navigation.types';
@@ -12,21 +12,11 @@ interface ProfileScreenProps {
   >;
 }
 
-export const ProfileScreen = ({
-  navigation,
-}: ProfileScreenProps): ReactElement => {
+export const ProfileScreen = (): ReactElement => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text>profile</Text>
-      {/* <Button
-        title="profile"
-        onPress={() => {
-          navigation?.navigate(navRootStackName.HOME_SCREEN, {
-            user: 'robert',
-          });
-        }}
-      /> */}
-    </View>
+    </SafeAreaView>
   );
 };
 

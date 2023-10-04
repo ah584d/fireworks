@@ -16,4 +16,5 @@ export const mainColors = {
   PRIMARY_OPACITY: '#FFCC2E59',
   PRIMARY_LIGHT: '#FFF7E0',
   PURPLE: '#7B68EE',
+  BLUE: '#0000FF',
 } as const;

@@ -11,22 +11,15 @@ import {UserAccount} from '../state/store.types';
 
 interface WelcomeScreenProps {
   route?: RouteProp<ScreenParams, navRootStackName.WELCOME_SCREEN>;
-  navigation?: NativeStackNavigationProp<
-    ScreenParams,
-    navRootStackName.WELCOME_SCREEN
-  >;
+  navigation?: NativeStackNavigationProp<ScreenParams, navRootStackName.WELCOME_SCREEN>;
 }
 
-export const WelcomeScreen = ({
-  navigation,
-}: WelcomeScreenProps): ReactElement => {
+export const WelcomeScreen = ({navigation}: WelcomeScreenProps): ReactElement => {
   const [userName, setUserName] = useState('');
   const {accounts, createAccount} = useFireStore(state => state) ?? {};
 
   const onSubmit = (): void => {
-    const isAccountExisting = accounts.filter(
-      (account: UserAccount) => account.name === userName,
-    );
+    const isAccountExisting = accounts.filter((account: UserAccount) => account.name === userName);
     if (isAccountExisting.length === 0) {
       createAccount(userName);
     }
@@ -39,18 +32,14 @@ export const WelcomeScreen = ({
       <View style={styles.contentWrapper}>
         <InputField
           onTextChanged={value => {
-            console.log(value);
             setUserName(value);
           }}
           value={userName}
+          textHint={'Enter Name'}
         />
       </View>
       <View style={styles.buttonWrapper}>
-        <FireButton
-          label="Submit"
-          onPressedCB={onSubmit}
-          disabled={userName?.length === 0}
-        />
+        <FireButton label="Submit" onPressedCB={onSubmit} disabled={userName?.length === 0} />
       </View>
     </View>
   );
