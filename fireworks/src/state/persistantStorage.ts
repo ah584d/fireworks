@@ -5,6 +5,7 @@ export const storage = new MMKV();
 export const hasUserName = (userName: string): boolean => storage.contains(userName);
 
 export const storeUser = (key: string, data: unknown): void => {
+  console.log(`====> DEBUG storeUser: `, key, JSON.stringify(data));
   storage.set(key, JSON.stringify(data));
 };
 

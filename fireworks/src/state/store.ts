@@ -7,9 +7,9 @@ export interface FireStoreType {
   account: UserAccount;
   setCurrentAccount: (userAccount: UserAccount) => void;
   createAccount: (name: string) => void;
-  addTransaction: (transaction: Transaction) => void;
-  editTransaction: (name: string, date: Date, amount: number, id: number) => void;
-  deleteTransaction: (id: number) => void;
+  addTransaction: (userName: string, transaction: Transaction) => void;
+  editTransaction: (userName: string, name: string, date: Date, amount: number, id: number) => void;
+  deleteTransaction: (userName: string, id: number) => void;
   resetAccount:(userName: string) => void;
 }
 
@@ -33,18 +33,20 @@ export const useFireStore = create<FireStoreType>(set => ({
       };
     }),
 
-  addTransaction: ({name, date, amount}: Transaction) =>
+  addTransaction: (userName: string, {name, date, amount}: Transaction) =>
     set((state: FireStoreType) => {
       const updatedAccount = {...state.account};
       updatedAccount.transactions.push({name, date, amount, id: getRandomUUID()});
       updatedAccount.total = updatedAccount.total + (amount ?? 0);
+
+      storeUser(userName, updatedAccount);
 
       return {
         account: updatedAccount,
       };
     }),
 
-  editTransaction: (name: string, date: Date, amount: number, id: number) =>
+  editTransaction: (userName: string,name: string, date: Date, amount: number, id: number) =>
     set((state: FireStoreType) => {
       const updatedAccount = {...state.account};
 
@@ -56,16 +58,20 @@ export const useFireStore = create<FireStoreType>(set => ({
         }
       });
 
+      storeUser(userName, updatedAccount);
+
       return {
         account: updatedAccount,
       };
     }),
 
-  deleteTransaction: (id: number) =>
+  deleteTransaction: (userName: string, id: number) =>
     set((state: FireStoreType) => {
       const updatedAccount = {...state.account};
 
       updatedAccount.transactions.filter((transaction: Transaction) => transaction.id !== id);
+
+      storeUser(userName, updatedAccount);
 
       return {
         account: updatedAccount,

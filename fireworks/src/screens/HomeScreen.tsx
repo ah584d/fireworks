@@ -27,7 +27,7 @@ export const HomeScreen = ({}: HomeScreenProps): ReactElement => {
 
   const onButtonPressedCB = (transaction: Transaction): void => {
     console.log(`====> DEBUG transaction: `, transaction);
-    addTransaction(transaction);
+    addTransaction(account?.name, transaction);
     refRBSheet.current?.close();
   };
 
@@ -35,7 +35,7 @@ export const HomeScreen = ({}: HomeScreenProps): ReactElement => {
     <View style={styles.totalWrapper}>
       <Text>
         <Text style={styles.labelTotal}>Total Expenses: </Text>
-        <Text style={styles.labelAmount}>$ {account.total}</Text>
+        <Text style={styles.labelAmount}>$ {account.total ?? 0}</Text>
       </Text>
     </View>
   );

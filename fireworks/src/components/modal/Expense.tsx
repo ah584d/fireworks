@@ -18,7 +18,7 @@ export const Expense: FC<ExpenseProps> = ({onButtonPressed, transaction, transac
 
   const {name, amount, date} = transaction ?? {};
 
-  console.log(`====> DEBUG isTransactionComplete: `, isTransactionComplete(expense));
+  // console.log(`====> DEBUG isTransactionComplete: `, isTransactionComplete(expense));
 
   return (
     <View style={styles.container}>
