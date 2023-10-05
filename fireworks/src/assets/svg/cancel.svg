@@ -1,0 +1,24 @@
+<svg width="16" height="16" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g id="Group_1874" data-name="Group 1874" transform="translate(-330.793 -65.793)">
+        <path
+            id="Path_1462"
+            data-name="Path 1462"
+            d="M0,9.159V0"
+            transform="translate(331.5 66.5) rotate(-45)"
+            fill="none"
+            stroke="#343434"
+            strokeLinecap="round"
+            strokeWidth="1"
+        />
+        <path
+            id="Path_1463"
+            data-name="Path 1463"
+            d="M0,0V9.159"
+            transform="translate(331.5 72.976) rotate(-135)"
+            fill="none"
+            stroke="#343434"
+            strokeLinecap="round"
+            strokeWidth="1"
+        />
+    </g>
+</svg>

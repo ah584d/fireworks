@@ -1,9 +1,12 @@
 import React, {FC, useEffect, useRef} from 'react';
+import {StyleSheet, View} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {SCREEN_HEIGHT} from '../../common/infra/infra.consts';
 import {mainColors} from '../../common/themes/colors';
+import {Spacing} from '../../common/themes/spacing';
 import {useFireStore} from '../../state/store';
 import {Transaction} from '../../types/store.types';
+import {CloseButton} from '../buttons/CloseButton';
 import {Expense} from './ExpenseForm';
 
 interface ModalWrapperProps {}
@@ -75,13 +78,16 @@ export const ModalWrapper: FC<ModalWrapperProps> = ({}) => {
       keyboardAvoidingViewEnabled
       onClose={onModalClosing}
       customStyles={{
-        wrapper: {
-          //backgroundColor: 'transparent',
+        container: {
+          borderRadius: 15,
         },
         draggableIcon: {
           backgroundColor: mainColors.GRAY_DARK,
         },
       }}>
+      <View style={styles.closeButton}>
+        <CloseButton action={onModalClosing} />
+      </View>
       <Expense
         transactionType={transactionType}
         transaction={transactionToEdit}
@@ -91,3 +97,10 @@ export const ModalWrapper: FC<ModalWrapperProps> = ({}) => {
     </RBSheet>
   );
 };
+
+const styles = StyleSheet.create({
+  closeButton: {
+    alignItems: 'flex-end',
+    marginRight: Spacing.s16,
+  },
+});
