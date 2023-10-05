@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useRef, useState} from 'react';
+import React, {ReactElement, useEffect, useRef, useState} from 'react';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {SCREEN_HEIGHT} from '../../common/infra/infra.consts';
 import {mainColors} from '../../common/themes/colors';
@@ -7,11 +7,7 @@ import {Transaction} from '../../state/store.types';
 import {TransactionType} from '../../types/common.types';
 import {Expense} from './Expense';
 
-interface ModalWrapperProps {
-  //transactionType?: TransactionType;
-}
-
-export const ModalWrapper: FC<ModalWrapperProps> = ({}: ModalWrapperProps) => {
+export const ModalWrapper = (): ReactElement => {
   const {account, addTransaction, editTransaction, setTransactionToEdit, transactionToEdit, isModalOpened, closeModal} = useFireStore(state => state) ?? {};
   const [transactionType, setTransactionType] = useState<TransactionType>('adding');
 

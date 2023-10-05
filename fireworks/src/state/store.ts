@@ -1,6 +1,6 @@
 import {create} from 'zustand';
 import {getRandomUUID} from '../common/utils/numbers.utils';
-import {deleteAccount, storeUser} from './persistantStorage';
+import {deleteAccount, storeUser} from './persistentStorage';
 import {Transaction, UserAccount} from './store.types';
 
 export interface FireStoreType {

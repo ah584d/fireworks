@@ -6,7 +6,7 @@ import {Spacing} from '../common/themes/spacing';
 import {FireButton} from '../components/buttons/FireButton';
 import {InputField} from '../components/inputField/InputField';
 import {ScreenParams, navRootStackName} from '../navigation/navigation.types';
-import {hasUserName, retrieveUserData} from '../state/persistantStorage';
+import {hasUserName, retrieveUserData} from '../state/persistentStorage';
 import {useFireStore} from '../state/store';
 import {UserAccount} from '../state/store.types';
 
