@@ -22,6 +22,10 @@
 3. Android support
 4. Amountformatting with comma
 
+## Decision justification in code
+1. You could find some weird things in my code, I would be glad to explain my decisions, in general I tried to keep the code clean,
+   but due to the limited time that I got (working on evening only :-) ) I did some "shortcut" that I would not have done for prod. application.
+
 ## Installation
 
 1. make sure you run with node 18 and above
