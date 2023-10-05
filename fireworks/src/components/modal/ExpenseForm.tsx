@@ -47,8 +47,8 @@ export const Expense: FC<ExpenseProps> = ({onButtonPressed, onDeleteButtonPresse
             editable
             onChangeText={(updatedValue: string) => setExpense(previous => ({...previous, amount: +updatedValue}))}
             placeholder={'Amount'}
-            keyboardType={'numbers-and-punctuation'}
             value={amount?.toString()}
+            keyboardType={'decimal-pad'}
           />
         </View>
         <View style={styles.formRow}>
