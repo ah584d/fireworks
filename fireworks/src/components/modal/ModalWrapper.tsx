@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useRef} from 'react';
+import React, {FC, useEffect, useRef, useState} from 'react';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {SCREEN_HEIGHT} from '../../common/infra/infra.consts';
 import {mainColors} from '../../common/themes/colors';
@@ -8,13 +8,13 @@ import {TransactionType} from '../../types/common.types';
 import {Expense} from './Expense';
 
 interface ModalWrapperProps {
-  transactionType?: TransactionType;
+  //transactionType?: TransactionType;
 }
 
-export const ModalWrapper: FC<ModalWrapperProps> = ({transactionType = 'adding'}) => {
+export const ModalWrapper: FC<ModalWrapperProps> = ({}: ModalWrapperProps) => {
   const {account, addTransaction, editTransaction, setTransactionToEdit, transactionToEdit, isModalOpened, closeModal} = useFireStore(state => state) ?? {};
+  const [transactionType, setTransactionType] = useState<TransactionType>('adding');
 
-  console.log(`====> DEBUG isModalOpened: `, isModalOpened, transactionToEdit);
   useEffect(() => {
     if (isModalOpened) {
       refRBSheet.current?.open();
@@ -22,6 +22,10 @@ export const ModalWrapper: FC<ModalWrapperProps> = ({transactionType = 'adding'}
       refRBSheet.current?.close();
     }
   }, [isModalOpened]);
+
+  useEffect(() => {
+    setTransactionType(transactionToEdit ? 'editing' : 'adding');
+  }, [transactionToEdit]);
 
   const refRBSheet = useRef<RBSheet | null>(null);
 

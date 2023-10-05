@@ -54,15 +54,14 @@ export const useFireStore = create<FireStoreType>(set => ({
 
   editTransaction: (userName: string, transaction: Transaction) =>
     set((state: FireStoreType) => {
-      const updatedAccount = {...state.account};
-
-      updatedAccount.transactions.filter((transactionItem: Transaction) => {
+      const updatedTransactions = state.account.transactions.map((transactionItem: Transaction) => {
         if (transactionItem.id === transaction.id) {
-          return {name: transaction.name, date: transaction.date, amount: transaction.amount, id: transactionItem.id};
+          return {...transactionItem, name: transaction.name, date: transaction.date, amount: transaction.amount};
         } else {
-          return transaction;
+          return transactionItem;
         }
       });
+      const updatedAccount = {...state.account, transactions: updatedTransactions};
 
       storeUser(userName, updatedAccount);
 

@@ -18,8 +18,8 @@ export const Table: FC<TableProps> = ({aggregatedTransactions, longPressAction})
       </View>
       <View>
         {transactions.map((item: Transaction, index: number) => (
-          <TouchableOpacity onLongPress={() => longPressAction(item)} key={`${item.id}${item.name}`}>
-            <View style={[styles.wrapper, {borderBottomWidth: index !== transactions.length - 1 ? 1 : 0}]} key={`${item.id}${item.name}`}>
+          <TouchableOpacity onLongPress={() => longPressAction(item)} key={`${item.id}${item.name}${index}`}>
+            <View style={[styles.wrapper, {borderBottomWidth: index !== transactions.length - 1 ? 1 : 0}]}>
               <Text style={styles.text}>{item.name}</Text>
               <View style={styles.amount}>
                 <Text style={[styles.text, {paddingLeft: 0}]}>$ {item.amount}</Text>

@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useState} from 'react';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
 import {mainColors} from '../../common/themes/colors';
 import {Spacing} from '../../common/themes/spacing';
@@ -14,12 +14,9 @@ interface ExpenseProps {
 }
 
 export const Expense: FC<ExpenseProps> = ({onButtonPressed, transaction, transactionType}) => {
-  const [expense, setExpense] = useState<Transaction>({} as Transaction);
+  const [expense, setExpense] = useState<Transaction>(transaction ?? ({} as Transaction));
 
-  const {name, amount, date} = transaction ?? {};
-  useEffect(() => {
-    setExpense(previous => ({...previous, date: new Date().toDateString()}));
-  }, []);
+  const {name, amount, date} = expense ?? {};
 
   const titleLabel = transactionType === 'adding' ? 'Create Expense' : 'Edit Expense';
   return (
@@ -36,7 +33,7 @@ export const Expense: FC<ExpenseProps> = ({onButtonPressed, transaction, transac
           <TextInput style={{}} editable onChangeText={(updatedValue: string) => setExpense(previous => ({...previous, date: stringToDateString(updatedValue)}))} placeholder={'Date'} keyboardType={'default'} value={date} />
         </View>
       </View>
-      <FireButton label={transactionType === 'adding' ? 'Create' : 'Save'} onPressed={() => onButtonPressed(expense)} />
+      <FireButton label={transactionType === 'adding' ? 'Create' : 'Save'} onPressed={() => onButtonPressed(expense as Transaction)} />
     </View>
   );
 };

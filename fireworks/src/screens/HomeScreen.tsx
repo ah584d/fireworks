@@ -23,7 +23,7 @@ export const HomeScreen = ({}: HomeScreenProps): ReactElement => {
 
   const aggregatedData = getAggregatedDate(account.transactions);
 
-  console.log(`====> DEBUG account: `, account, JSON.stringify(aggregatedData, null, 2));
+  //console.log(`====> DEBUG account: `, account, JSON.stringify(aggregatedData, null, 2));
 
   const onLongPressCB = (transaction: Transaction): void => {
     setTransactionToEdit(transaction);
