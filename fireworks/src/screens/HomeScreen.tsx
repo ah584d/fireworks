@@ -21,6 +21,7 @@ export const HomeScreen = ({}: HomeScreenProps): ReactElement => {
   const {account, openModal, setTransactionToEdit, setTransactionType, filteredTransactions, resetFilters} =
     useFireStore(state => state) ?? {};
 
+    console.log(`====> DEBUG accounttransactions: `, account.transactions);
   const aggregatedData = getAggregatedDate(
     filteredTransactions.length > 0 ? filteredTransactions : account.transactions
   );

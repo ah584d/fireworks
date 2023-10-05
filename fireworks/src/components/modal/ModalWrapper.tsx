@@ -48,6 +48,8 @@ export const ModalWrapper: FC<ModalWrapperProps> = ({}) => {
         break;
       }
       default:
+        addTransaction(account?.name, currentTransaction);
+
         break;
     }
     onModalClosing();

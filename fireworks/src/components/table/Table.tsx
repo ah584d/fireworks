@@ -4,6 +4,7 @@ import {mainColors} from '../../common/themes/colors';
 import {Spacing} from '../../common/themes/spacing';
 import {AggregatedTransactions} from '../../types/common.types';
 import {Transaction} from '../../types/store.types';
+import { ListEmptyComponent } from '../listEmptyComponent/ListEmptyComponent';
 
 interface TableProps {
   aggregatedTransactions: AggregatedTransactions[];
@@ -37,6 +38,7 @@ export const Table: FC<TableProps> = ({aggregatedTransactions, longPressAction})
       data={aggregatedTransactions}
       showsVerticalScrollIndicator={true}
       renderItem={({item}) => renderItem(item)}
+      ListEmptyComponent={ListEmptyComponent}
     />
   );
 };

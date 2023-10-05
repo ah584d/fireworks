@@ -62,14 +62,16 @@ export const useFireStore = create<FireStoreType>(set => ({
 
   editTransaction: (userName: string, {id, name, date, amount}: Transaction) =>
     set((state: FireStoreType) => {
+      let total = 0;
       const updatedTransactions = state.account.transactions.map((transactionItem: Transaction) => {
+        total = total + (amount ?? 0);
         if (transactionItem.id === id) {
           return {...transactionItem, name: name, date: date, amount: amount};
         } else {
           return transactionItem;
         }
       });
-      const updatedAccount = {...state.account, transactions: updatedTransactions};
+      const updatedAccount = {...state.account, transactions: updatedTransactions, total};
 
       storeUser(userName, updatedAccount);
 
@@ -80,11 +82,16 @@ export const useFireStore = create<FireStoreType>(set => ({
 
   deleteTransaction: (userName: string, id: number) =>
     set((state: FireStoreType) => {
+      let total = 0;
       const updatedTransactions = state.account.transactions.filter(
         (transaction: Transaction) => transaction.id !== id
       );
 
-      const updatedAccount = {...state.account, transactions: updatedTransactions};
+      updatedTransactions.forEach((element: Transaction) => {
+        total = total + (element.amount ?? 0);
+      });
+
+      const updatedAccount = {...state.account, transactions: updatedTransactions, total};
       storeUser(userName, updatedAccount);
 
       return {
