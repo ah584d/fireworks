@@ -2,6 +2,7 @@ import React, {ReactElement} from 'react';
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import SVGSearch from '../assets/svg/search.svg';
 import {mainColors} from '../common/themes/colors';
 import {Spacing} from '../common/themes/spacing';
 import {getAggregatedDate} from '../common/utils/businessLogic.utils';
@@ -21,7 +22,6 @@ export const HomeScreen = ({}: HomeScreenProps): ReactElement => {
   const {account, openModal, setTransactionToEdit, setTransactionType, filteredTransactions, resetFilters} =
     useFireStore(state => state) ?? {};
 
-    console.log(`====> DEBUG accounttransactions: `, account.transactions);
   const aggregatedData = getAggregatedDate(
     filteredTransactions.length > 0 ? filteredTransactions : account.transactions
   );
@@ -57,6 +57,7 @@ export const HomeScreen = ({}: HomeScreenProps): ReactElement => {
           onPressed={onFilterButtonPressed}
           customStyle={{backgroundColor: mainColors.GRAY_EXTRA_LIGHT, borderColor: mainColors.GRAY}}
           labelCustomStyle={{color: undefined}}
+          leftIcon={<SVGSearch />}
         />
       </View>
     </View>
