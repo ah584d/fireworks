@@ -1,19 +1,17 @@
-import React, {ReactElement, useRef} from 'react';
+import React, {ReactElement} from 'react';
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import RBSheet from 'react-native-raw-bottom-sheet';
-import {SCREEN_HEIGHT} from '../common/infra/infra.consts';
+import {mainColors} from '../common/themes/colors';
 import {Spacing} from '../common/themes/spacing';
 import {getAggregatedDate} from '../common/utils/bl.utils';
 import {FireButton} from '../components/buttons/FireButton';
-import {FloatingButton} from '../components/buttons/FloatingButton';
-import {Expense} from '../components/modal/Expense';
+// import {FloatingButton} from '../components/buttons/FloatingButton';
+import {ModalWrapper} from '../components/modal/ModalWrapper';
 import {Table} from '../components/table/Table';
 import {ScreenParams, navRootStackName} from '../navigation/navigation.types';
 import {useFireStore} from '../state/store';
 import {Transaction} from '../state/store.types';
-import { mainColors } from '../common/themes/colors';
 
 interface HomeScreenProps {
   route?: RouteProp<ScreenParams, navRootStackName.HOME_SCREEN>;
@@ -21,19 +19,15 @@ interface HomeScreenProps {
 }
 
 export const HomeScreen = ({}: HomeScreenProps): ReactElement => {
-  const {account, addTransaction} = useFireStore(state => state) ?? {};
-  const refRBSheet = useRef<RBSheet | null>(null);
+  const {account, openModal, setTransactionToEdit} = useFireStore(state => state) ?? {};
 
   const aggregatedData = getAggregatedDate(account.transactions);
 
   console.log(`====> DEBUG account: `, account, JSON.stringify(aggregatedData, null, 2));
-  const openModal = (): void => {
-    refRBSheet.current?.open();
-  };
 
-  const onButtonPressedCB = (transaction: Transaction): void => {
-    addTransaction(account?.name, transaction);
-    refRBSheet.current?.close();
+  const onLongPressCB = (transaction: Transaction): void => {
+    setTransactionToEdit(transaction);
+    openModal();
   };
 
   const renderTop = (): ReactElement => (
@@ -45,7 +39,7 @@ export const HomeScreen = ({}: HomeScreenProps): ReactElement => {
         </Text>
       </View>
       <View style={styles.filtersWrapper}>
-        <FireButton label="Filters" onPressed={() => undefined} customStyle={{backgroundColor: mainColors.GRAY_EXTRA_LIGHT, borderColor: mainColors.GRAY}} labelCustomStyle={{color: undefined}}/>
+        <FireButton label="Filters" onPressed={() => undefined} customStyle={{backgroundColor: mainColors.GRAY_EXTRA_LIGHT, borderColor: mainColors.GRAY}} labelCustomStyle={{color: undefined}} />
       </View>
     </View>
   );
@@ -53,26 +47,8 @@ export const HomeScreen = ({}: HomeScreenProps): ReactElement => {
   return (
     <SafeAreaView style={styles.container}>
       {renderTop()}
-
-      <RBSheet
-        ref={refRBSheet}
-        height={SCREEN_HEIGHT * 0.92}
-        closeOnDragDown
-        closeOnPressMask={false}
-        keyboardAvoidingViewEnabled
-        customStyles={{
-          wrapper: {
-            //backgroundColor: 'transparent',
-          },
-          draggableIcon: {
-            backgroundColor: '#000',
-          },
-        }}>
-        <Expense transactionType="adding" onButtonPressed={onButtonPressedCB} />
-      </RBSheet>
-
-      <Table aggregatedTransactions={aggregatedData} />
-      <FloatingButton label="+" onPressed={openModal}/>
+      <ModalWrapper />
+      <Table aggregatedTransactions={aggregatedData} longPressAction={onLongPressCB} />
     </SafeAreaView>
   );
 };

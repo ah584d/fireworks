@@ -2,13 +2,17 @@ import React from 'react';
 import {View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {RouteProp} from '@react-navigation/native';
-import SVGHome from '../assets/svg/menu-home.svg';
-import SVGProfile from '../assets/svg/menu-profile.svg';
 import SVGHomeSelected from '../assets/svg/menu-home-selected.svg';
+import SVGHome from '../assets/svg/menu-home.svg';
 import SVGProfileSelected from '../assets/svg/menu-profile-selected.svg';
+import SVGProfile from '../assets/svg/menu-profile.svg';
 import {mainColors} from '../common/themes/colors';
+import {BottomBarWrapper} from '../components/bottomBarWrapper/BottomBarWrapper';
+import {TabBarAdvancedButton} from '../components/buttons/TabBarAdvancedButton';
+import {ModalWrapper} from '../components/modal/ModalWrapper';
 import {HomeScreen} from '../screens/HomeScreen';
 import {ProfileScreen} from '../screens/ProfileScreen';
+import {useFireStore} from '../state/store';
 import {ScreenParams, navRootStackName} from './navigation.types';
 
 const tabBarIcon = (focused: boolean, route: string): JSX.Element => {
@@ -35,6 +39,8 @@ interface TabsNavigationProps {
 
 export const TabsNavigation = ({route}: TabsNavigationProps): React.ReactElement => {
   const userName = route?.params?.userName;
+  const {openModal} = useFireStore(state => state) ?? {};
+
   return (
     <BottomBar.Navigator
       screenOptions={({route: routeParam}) => ({
@@ -44,8 +50,17 @@ export const TabsNavigation = ({route}: TabsNavigationProps): React.ReactElement
         tabBarIcon: ({focused}) => tabBarIcon(focused, routeParam?.name),
         tabBarActiveTintColor: mainColors.BLUE,
         tabBarInactiveTintColor: mainColors.GRAY_DARK,
-      })}>
+      })}
+      tabBar={BottomBarWrapper}>
       <BottomBar.Screen name={navRootStackName.HOME_SCREEN} component={HomeScreen} options={{headerTitle: userName}} />
+      <BottomBar.Screen
+        name={navRootStackName.TAB_BUTTON_PLUS}
+        component={ModalWrapper}
+        options={{
+          tabBarButton: () => <TabBarAdvancedButton onButtonPressed={openModal} />,
+        }}
+      />
+
       <BottomBar.Screen name={navRootStackName.PROFILE_SCREEN} component={ProfileScreen} options={{headerTitle: userName}} />
     </BottomBar.Navigator>
   );

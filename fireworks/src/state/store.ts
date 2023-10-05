@@ -4,18 +4,24 @@ import {deleteAccount, storeUser} from './persistantStorage';
 import {Transaction, UserAccount} from './store.types';
 
 export interface FireStoreType {
+  isModalOpened: boolean;
   account: UserAccount;
+  transactionToEdit: Transaction | undefined;
   setCurrentAccount: (userAccount: UserAccount) => void;
   createAccount: (name: string) => void;
   addTransaction: (userName: string, transaction: Transaction) => void;
-  editTransaction: (userName: string, name: string, date: Date, amount: number, id: number) => void;
+  editTransaction: (userName: string, transaction: Transaction) => void;
   deleteTransaction: (userName: string, id: number) => void;
-  resetAccount:(userName: string) => void;
+  resetAccount: (userName: string) => void;
+  openModal: () => void;
+  closeModal: () => void;
+  setTransactionToEdit: (transaction: Transaction | undefined) => void;
 }
 
 export const useFireStore = create<FireStoreType>(set => ({
   account: {} as unknown as UserAccount,
-
+  isModalOpened: false,
+  transactionToEdit: undefined,
   setCurrentAccount: (userAccount: UserAccount) =>
     set(() => {
       return {
@@ -46,13 +52,13 @@ export const useFireStore = create<FireStoreType>(set => ({
       };
     }),
 
-  editTransaction: (userName: string,name: string, date: Date, amount: number, id: number) =>
+  editTransaction: (userName: string, transaction: Transaction) =>
     set((state: FireStoreType) => {
       const updatedAccount = {...state.account};
 
-      updatedAccount.transactions.filter((transaction: Transaction) => {
-        if (transaction.id === id) {
-          return {name, date, amount, id};
+      updatedAccount.transactions.filter((transactionItem: Transaction) => {
+        if (transactionItem.id === transaction.id) {
+          return {name: transaction.name, date: transaction.date, amount: transaction.amount, id: transactionItem.id};
         } else {
           return transaction;
         }
@@ -84,6 +90,23 @@ export const useFireStore = create<FireStoreType>(set => ({
 
       return {
         account: {} as UserAccount,
+      };
+    }),
+
+  openModal: () =>
+    set(() => ({
+      isModalOpened: true,
+    })),
+
+  closeModal: () =>
+    set(() => ({
+      isModalOpened: false,
+    })),
+
+  setTransactionToEdit: (transaction: Transaction | undefined) =>
+    set(() => {
+      return {
+        transactionToEdit: transaction,
       };
     }),
 }));

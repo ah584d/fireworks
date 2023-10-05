@@ -21,10 +21,11 @@ export const Expense: FC<ExpenseProps> = ({onButtonPressed, transaction, transac
     setExpense(previous => ({...previous, date: new Date().toDateString()}));
   }, []);
 
+  const titleLabel = transactionType === 'adding' ? 'Create Expense' : 'Edit Expense';
   return (
     <View style={styles.container}>
       <View style={styles.form}>
-        <Text style={styles.title}>Create Expense</Text>
+        <Text style={styles.title}>{titleLabel}</Text>
         <View style={styles.formRow}>
           <TextInput style={{}} editable onChangeText={(updatedValue: string) => setExpense(previous => ({...previous, name: updatedValue}))} placeholder={'Title'} keyboardType={'default'} value={name} />
         </View>

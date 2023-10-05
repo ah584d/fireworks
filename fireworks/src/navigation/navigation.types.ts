@@ -3,6 +3,7 @@ export enum navRootStackName {
   HOME_SCREEN = 'Home',
   PROFILE_SCREEN = 'Profile',
   TABS_STACK = 'tabsStack',
+  TAB_BUTTON_PLUS = 'tabButtonPlus',
 }
 
 export type ScreenParams = {
@@ -10,4 +11,5 @@ export type ScreenParams = {
   [navRootStackName.HOME_SCREEN]: undefined;
   [navRootStackName.PROFILE_SCREEN]: undefined;
   [navRootStackName.TABS_STACK]: {userName: string};
+  [navRootStackName.TAB_BUTTON_PLUS]: never;
 };
