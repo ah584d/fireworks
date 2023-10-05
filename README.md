@@ -20,7 +20,6 @@
 1. Input field validation with regexp
 2. Unit test
 3. Android support
-4. Amountformatting with comma
 
 ## Decision justification in code
 1. You could find some weird things in my code, I would be glad to explain my decisions, in general I tried to keep the code clean,
