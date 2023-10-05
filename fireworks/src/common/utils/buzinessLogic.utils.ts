@@ -24,7 +24,7 @@ export const getAggregatedDate = (transactions: Transaction[]): AggregatedTransa
   const aggregatedTransactionsArr: AggregatedTransactions[] = Object.values(aggregatedTransactions);
 
   // Sort the aggregated transactions by date (ascending order)
-  aggregatedTransactionsArr.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  aggregatedTransactionsArr.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   return aggregatedTransactionsArr;
 };

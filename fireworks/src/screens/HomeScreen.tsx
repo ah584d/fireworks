@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     width: '100%',
     //borderWidth: 1,
     paddingHorizontal: Spacing.gutter,
-    marginBottom: Spacing.s32,
+    marginBottom: Spacing.s8,
   },
   totalWrapper: {
     width: '100%',

@@ -11,17 +11,17 @@ interface TableProps {
 
 export const Table: FC<TableProps> = ({aggregatedTransactions, longPressAction}) => {
   const renderItem = ({date, transactions}: AggregatedTransactions): ReactElement => (
-    <View style={styles.container}>
+    <View style={styles.rowContainer}>
       <View style={styles.dateContainer}>
-        <Text style={styles.text}>{date}</Text>
+        <Text style={styles.dateText}>{date}</Text>
       </View>
       <View>
         {transactions.map((item: Transaction, index: number) => (
           <TouchableOpacity onLongPress={() => longPressAction(item)} key={`${item.id}${item.name}${index}`}>
-            <View style={[styles.wrapper, {borderBottomWidth: index !== transactions.length - 1 ? 1 : 0}]}>
+            <View style={[styles.expenseWrapper, {borderBottomWidth: index !== transactions.length - 1 ? 1 : 0}]}>
               <Text style={styles.text}>{item.name}</Text>
-              <View style={styles.amount}>
-                <Text style={[styles.text, {paddingLeft: 0}]}>$ {item.amount}</Text>
+              <View style={styles.amountWrapper}>
+                <Text style={[styles.amountText, {paddingLeft: 0}]}>$ {item.amount}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -32,7 +32,7 @@ export const Table: FC<TableProps> = ({aggregatedTransactions, longPressAction})
 
   return (
     <FlatList
-      style={styles.list}
+      style={styles.container}
       data={aggregatedTransactions}
       showsVerticalScrollIndicator={true}
       renderItem={({item}) => renderItem(item)}
@@ -42,36 +42,36 @@ export const Table: FC<TableProps> = ({aggregatedTransactions, longPressAction})
 
 const styles = StyleSheet.create({
   container: {
+    width: '100%',
+  },
+  rowContainer: {
     //borderWidth: 1,
   },
-  wrapper: {
+  dateContainer: {
+    justifyContent: 'center',
+    backgroundColor: mainColors.GRAY_EXTRA_LIGHT,
+    height: Spacing.s32,
+  },
+  dateText: {
+    paddingHorizontal: Spacing.s16,
+  },
+  expenseWrapper: {
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: Spacing.s24,
-    marginVertical: Spacing.s8,
+    height: Spacing.s48,
     borderBottomColor: mainColors.GRAY_EXTRA_LIGHT,
-  },
-  dateContainer: {
-    justifyContent: 'center',
-    backgroundColor: mainColors.GRAY_LIGHT,
-    marginVertical: Spacing.s12,
-    height: Spacing.s24,
   },
   text: {
     flex: 0.8,
-    //borderWidth: 1,
     paddingHorizontal: Spacing.s16,
     textAlignVertical: 'center',
   },
-  amount: {
-    flex: 0.2,
-    //borderWidth: 1,
-    alignItems: 'flex-start',
-    justifyContent: 'center',
+  amountWrapper: {
+    flex: 0.15,
   },
-  list: {
-    width: '100%',
+  amountText: {
+    textAlignVertical: 'center',
   },
 });
