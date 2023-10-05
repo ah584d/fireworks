@@ -42,7 +42,7 @@ Tested on iPhone simulator ** only ** [ I don't have iphone device ]
 
 ## Screenshots
 
-<img src="pictures/screen4.jpg" align="right" width="250" height="450" style="background-color:white;"/>
+<img src="pictures/screen1.jpg" align="right" width="250" height="450" style="background-color:white;"/>
 <img src="pictures/screen3.jpg" align="right" width="250" height="450" style="background-color:white;"/>
 <img src="pictures/screen2.jpg" align="right" width="250" height="450" style="background-color:white;"/>
 <img src="pictures/screen1.jpg" align="right" width="250" height="450" style="background-color:white;"/>
