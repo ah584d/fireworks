@@ -34,6 +34,8 @@ export const ModalWrapper = (): ReactElement => {
 
   const refRBSheet = useRef<RBSheet | null>(null);
 
+  const modalHeight = transactionType === 'filter' ? SCREEN_HEIGHT * 0.7 : SCREEN_HEIGHT * 0.92;
+
   const onButtonPressedCB = (currentTransaction: Transaction): void => {
     switch (transactionType) {
       case 'adding': {
@@ -70,7 +72,7 @@ export const ModalWrapper = (): ReactElement => {
   return (
     <RBSheet
       ref={refRBSheet}
-      height={SCREEN_HEIGHT * 0.92}
+      height={modalHeight}
       closeOnDragDown={true}
       closeOnPressMask={false}
       keyboardAvoidingViewEnabled
