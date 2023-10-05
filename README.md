@@ -13,13 +13,14 @@
 6. react navigation stack
 7. fully typescript
 8. filtering
+9. date picker
  
 ## Left over
 
 1. Input field validation with regexp
 2. Unit test
 3. Android support
-4. Amount formatting with comma
+4. Amountformatting with comma
 
 ## Installation
 
@@ -34,7 +35,6 @@
 ## Usage
 
 Tested on iPhone simulator ** only ** [ I don't have iphone device ]
-
 
 ## Screenshots
 
