@@ -1,5 +1,5 @@
 import {create} from 'zustand';
-import {getRandomUUID} from '../common/utils/numbers.utils';
+import {getRandomUUID} from '../common/utils/number.utils';
 import {TransactionType} from '../types/common.types';
 import {Transaction, UserAccount} from '../types/store.types';
 import {deleteAccount, storeUser} from './persistentStorage';

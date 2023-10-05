@@ -5,6 +5,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {mainColors} from '../common/themes/colors';
 import {Spacing} from '../common/themes/spacing';
 import {FireButton} from '../components/buttons/FireButton';
+import {ModalWrapper} from '../components/modal/ModalWrapper';
 import {ScreenParams, navRootStackName} from '../navigation/navigation.types';
 import {useFireStore} from '../state/store';
 
@@ -28,8 +29,14 @@ export const ProfileScreen = ({navigation}: ProfileScreenProps): ReactElement =>
         <Text style={styles.amount}>{account.transactions?.length}</Text>
       </View>
       <View style={styles.wrapper}>
-        <FireButton label="Sign Out" onPressed={onPressedCB} customStyle={styles.buttonCustomStyle} labelCustomStyle={{color: undefined}}/>
+        <FireButton
+          label="Sign Out"
+          onPressed={onPressedCB}
+          customStyle={styles.buttonCustomStyle}
+          labelCustomStyle={{color: undefined}}
+        />
       </View>
+      <ModalWrapper />
     </SafeAreaView>
   );
 };

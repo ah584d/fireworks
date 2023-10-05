@@ -12,6 +12,7 @@ import {Table} from '../components/table/Table';
 import {ScreenParams, navRootStackName} from '../navigation/navigation.types';
 import {useFireStore} from '../state/store';
 import {Transaction} from '../types/store.types';
+import { addDecimalMark } from '../common/utils/number.utils';
 
 interface HomeScreenProps {
   route?: RouteProp<ScreenParams, navRootStackName.HOME_SCREEN>;
@@ -48,7 +49,7 @@ export const HomeScreen = ({}: HomeScreenProps): ReactElement => {
       <View style={styles.totalWrapper}>
         <Text>
           <Text style={styles.labelTotal}>Total Expenses: </Text>
-          <Text style={styles.labelAmount}>$ {account.total ?? 0}</Text>
+          <Text style={styles.labelAmount}>$ {addDecimalMark(account.total ?? 0)}</Text>
         </Text>
       </View>
       <View style={styles.filtersWrapper}>
