@@ -16,14 +16,14 @@
  
 ## Left over
 
-1. Input vaidation with regexp
+1. Input field validation with regexp
 2. Unit test
 3. Android support
 4. Amount formatting with comma
 
 ## Installation
 
-1.make sure you run with node 18 and above
+1. make sure you run with node 18 and above
 2. git clone git@github.com:ah584d/fireworks.git
 3. cd fireworks
 4. npm ci -d
