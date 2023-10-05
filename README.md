@@ -40,7 +40,7 @@
 ## Usage
 
 1. Tested on iPhone simulator ** only ** [ I don't have iphone device ]
-2. The application usage is self explained, the only "hidden" faeature is that you need to long press on an expense in order to edit/delete it
+2. The application usage is self explained, the only "hidden" feature is that you need to long press on an expense in order to edit/delete it
 
 ## Screenshots
 
