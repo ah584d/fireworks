@@ -50,7 +50,8 @@ export const TabsNavigation = ({route}: TabsNavigationProps): React.ReactElement
         tabBarActiveTintColor: mainColors.BLUE,
         tabBarInactiveTintColor: mainColors.GRAY_DARK,
       })}
-      tabBar={BottomBarWrapper}>
+      tabBar={BottomBarWrapper}
+      >
       <BottomBar.Screen name={navRootStackName.HOME_SCREEN} component={HomeScreen} options={{headerTitle: userName}} />
       <BottomBar.Screen
         name={navRootStackName.TAB_BUTTON_PLUS}

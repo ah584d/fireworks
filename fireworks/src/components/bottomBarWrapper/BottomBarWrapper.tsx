@@ -9,9 +9,6 @@ export const BottomBarWrapper = (props: BottomTabBarProps): ReactElement => (
 );
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   navigatorContainer: {
     position: 'absolute',
     bottom: 0,
