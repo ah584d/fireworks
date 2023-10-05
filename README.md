@@ -43,5 +43,6 @@ Tested on iPhone simulator ** only ** [ I don't have iphone device ]
 ## Screenshots
 
 <img src="pictures/screen1.jpg" align="left" width="250" height="480" style="background-color:white;"/>
+<img src="pictures/screen2.jpg" align="left" width="250" height="480" style="background-color:white;"/>
 
   
