@@ -12,6 +12,8 @@
 5. cool bottom nav bar design 
 6. react navigation stack
 7. fully typescript
+ <img src="pictures/ts.jpg" align="left" width="250" height="480" style="background-color:white;"/>
+
 8. filtering
 9. date picker
  
