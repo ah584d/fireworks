@@ -18,15 +18,29 @@ interface HomeScreenProps {
 }
 
 export const HomeScreen = ({}: HomeScreenProps): ReactElement => {
-  const {account, openModal, setTransactionToEdit, setTransactionType} = useFireStore(state => state) ?? {};
+  const {account, openModal, setTransactionToEdit, setTransactionType, filteredTransactions, resetFilters} =
+    useFireStore(state => state) ?? {};
 
-  const aggregatedData = getAggregatedDate(account.transactions);
+  const aggregatedData = getAggregatedDate(
+    filteredTransactions.length > 0 ? filteredTransactions : account.transactions
+  );
 
   const onLongPressCB = (transaction: Transaction): void => {
     setTransactionToEdit(transaction);
     setTransactionType('editing');
     openModal();
   };
+
+  const onFilterButtonPressed = (): void => {
+    if (filteredTransactions.length > 0) {
+      resetFilters();
+    } else {
+      setTransactionType('filter');
+      openModal();
+    }
+  };
+
+  const filterButtonLabel = filteredTransactions.length > 0 ? 'Reset Filters' : 'Filters';
 
   const renderTop = (): ReactElement => (
     <View style={styles.topWrapper}>
@@ -38,11 +52,8 @@ export const HomeScreen = ({}: HomeScreenProps): ReactElement => {
       </View>
       <View style={styles.filtersWrapper}>
         <FireButton
-          label="Filters"
-          onPressed={() => {
-            setTransactionType('filter');
-            openModal();
-          }}
+          label={filterButtonLabel}
+          onPressed={onFilterButtonPressed}
           customStyle={{backgroundColor: mainColors.GRAY_EXTRA_LIGHT, borderColor: mainColors.GRAY}}
           labelCustomStyle={{color: undefined}}
         />
@@ -62,26 +73,22 @@ export const HomeScreen = ({}: HomeScreenProps): ReactElement => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
     marginTop: Spacing.s32,
   },
   topWrapper: {
     width: '100%',
-    //borderWidth: 1,
     paddingHorizontal: Spacing.gutter,
     marginBottom: Spacing.s8,
   },
   totalWrapper: {
     width: '100%',
-    //borderWidth: 1,
     alignItems: 'flex-start',
     marginBottom: Spacing.s24,
   },
   filtersWrapper: {
     width: '100%',
-    //borderWidth: 1,
     alignItems: 'flex-end',
     marginBottom: Spacing.s24,
   },

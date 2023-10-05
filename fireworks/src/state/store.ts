@@ -9,6 +9,7 @@ export interface FireStoreType {
   account: UserAccount;
   transactionToEdit: Transaction | undefined;
   transactionType: TransactionType;
+  filteredTransactions: Transaction[];
   setCurrentAccount: (userAccount: UserAccount) => void;
   createAccount: (name: string) => void;
   addTransaction: (userName: string, transaction: Transaction) => void;
@@ -19,6 +20,8 @@ export interface FireStoreType {
   closeModal: () => void;
   setTransactionToEdit: (transaction: Transaction | undefined) => void;
   setTransactionType: (transactionType: TransactionType | undefined) => void;
+  filterTransactions: (transaction: Transaction) => void;
+  resetFilters: () => void;
 }
 
 export const useFireStore = create<FireStoreType>(set => ({
@@ -26,6 +29,7 @@ export const useFireStore = create<FireStoreType>(set => ({
   isModalOpened: false,
   transactionToEdit: undefined,
   transactionType: 'adding',
+  filteredTransactions: [] as Transaction[],
   setCurrentAccount: (userAccount: UserAccount) =>
     set(() => {
       return {
@@ -56,11 +60,11 @@ export const useFireStore = create<FireStoreType>(set => ({
       };
     }),
 
-  editTransaction: (userName: string, transaction: Transaction) =>
+  editTransaction: (userName: string, {id, name, date, amount}: Transaction) =>
     set((state: FireStoreType) => {
       const updatedTransactions = state.account.transactions.map((transactionItem: Transaction) => {
-        if (transactionItem.id === transaction.id) {
-          return {...transactionItem, name: transaction.name, date: transaction.date, amount: transaction.amount};
+        if (transactionItem.id === id) {
+          return {...transactionItem, name: name, date: date, amount: amount};
         } else {
           return transactionItem;
         }
@@ -117,6 +121,24 @@ export const useFireStore = create<FireStoreType>(set => ({
     set(() => {
       return {
         transactionType: transactionType,
+      };
+    }),
+  filterTransactions: ({name, date, amount}: Transaction) =>
+    set((state: FireStoreType) => {
+      const filteredTransactions = state.account.transactions.filter((transactionItem: Transaction) => {
+        if (transactionItem.name === name || transactionItem.date === date || transactionItem.amount === amount) {
+          return transactionItem;
+        }
+      });
+
+      return {
+        filteredTransactions: filteredTransactions,
+      };
+    }),
+  resetFilters: () =>
+    set(() => {
+      return {
+        filteredTransactions: [],
       };
     }),
 }));

@@ -65,9 +65,8 @@ export const Expense: FC<ExpenseProps> = ({onButtonPressed, transaction, transac
         modal
         open={isDatePickerOpened}
         date={new Date()}
-        onConfirm={date => {
-          // setOpen(false)
-          setExpense(previous => ({...previous, date: date.toDateString()}));
+        onConfirm={dateSelected => {
+          setExpense(previous => ({...previous, date: dateSelected.toDateString()}));
           setIsDatePickerOpened(false);
         }}
         onCancel={() => {

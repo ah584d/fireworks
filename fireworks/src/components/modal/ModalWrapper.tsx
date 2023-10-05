@@ -19,6 +19,7 @@ export const ModalWrapper: FC<ModalWrapperProps> = ({}) => {
     closeModal,
     transactionType,
     setTransactionType,
+    filterTransactions,
   } = useFireStore(state => state) ?? {};
 
   useEffect(() => {
@@ -32,10 +33,22 @@ export const ModalWrapper: FC<ModalWrapperProps> = ({}) => {
   const refRBSheet = useRef<RBSheet | null>(null);
 
   const onButtonPressedCB = (currentTransaction: Transaction): void => {
-    if (transactionType === 'adding') {
-      addTransaction(account?.name, currentTransaction);
-    } else {
-      editTransaction(account?.name, currentTransaction);
+    switch (transactionType) {
+      case 'adding': {
+        addTransaction(account?.name, currentTransaction);
+        break;
+      }
+      case 'editing': {
+        editTransaction(account?.name, currentTransaction);
+        break;
+      }
+      case 'filter': {
+        console.log(`====> DEBUG filter: `, currentTransaction);
+        filterTransactions(currentTransaction);
+        break;
+      }
+      default:
+        break;
     }
     onModalClosing();
   };
@@ -45,6 +58,7 @@ export const ModalWrapper: FC<ModalWrapperProps> = ({}) => {
     setTransactionType(undefined);
     closeModal();
   };
+
   return (
     <RBSheet
       ref={refRBSheet}

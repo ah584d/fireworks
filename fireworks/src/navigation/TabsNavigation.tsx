@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {RouteProp} from '@react-navigation/native';
@@ -9,7 +9,6 @@ import SVGProfile from '../assets/svg/menu-profile.svg';
 import {mainColors} from '../common/themes/colors';
 import {BottomBarWrapper} from '../components/bottomBarWrapper/BottomBarWrapper';
 import {TabBarAdvancedButton} from '../components/buttons/TabBarAdvancedButton';
-import {ModalWrapper} from '../components/modal/ModalWrapper';
 import {HomeScreen} from '../screens/HomeScreen';
 import {ProfileScreen} from '../screens/ProfileScreen';
 import {useFireStore} from '../state/store';
@@ -55,13 +54,17 @@ export const TabsNavigation = ({route}: TabsNavigationProps): React.ReactElement
       <BottomBar.Screen name={navRootStackName.HOME_SCREEN} component={HomeScreen} options={{headerTitle: userName}} />
       <BottomBar.Screen
         name={navRootStackName.TAB_BUTTON_PLUS}
-        component={HomeScreen}
+        component={Fragment}
         options={{
           tabBarButton: () => <TabBarAdvancedButton onButtonPressed={openModal} />,
         }}
       />
 
-      <BottomBar.Screen name={navRootStackName.PROFILE_SCREEN} component={ProfileScreen} options={{headerTitle: userName}} />
+      <BottomBar.Screen
+        name={navRootStackName.PROFILE_SCREEN}
+        component={ProfileScreen}
+        options={{headerTitle: userName}}
+      />
     </BottomBar.Navigator>
   );
 };
