@@ -49,4 +49,5 @@
 <img src="pictures/screen3.jpg" align="left" width="250" height="480" style="background-color:white;"/>
 <img src="pictures/screen4.jpg" align="left" width="250" height="480" style="background-color:white;"/>
 <img src="pictures/screen5.jpg" align="left" width="250" height="480" style="background-color:white;"/>
+<img src="pictures/screen6.jpg" align="left" width="250" height="480" style="background-color:white;"/>
   
