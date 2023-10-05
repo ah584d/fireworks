@@ -1,5 +1,6 @@
 import React, {FC, useState} from 'react';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
+import DatePicker from 'react-native-date-picker';
 import {mainColors} from '../../common/themes/colors';
 import {Spacing} from '../../common/themes/spacing';
 import {Transaction} from '../../state/store.types';
@@ -14,6 +15,7 @@ interface ExpenseProps {
 
 export const Expense: FC<ExpenseProps> = ({onButtonPressed, transaction, transactionType}) => {
   const [expense, setExpense] = useState<Transaction>(transaction ?? ({} as Transaction));
+  const [isDatePickerOpened, setIsDatePickerOpened] = useState(false);
 
   const {name, amount, date} = expense ?? {};
 
@@ -43,9 +45,7 @@ export const Expense: FC<ExpenseProps> = ({onButtonPressed, transaction, transac
         <View style={styles.formRow}>
           <TextInput
             editable
-            onChangeText={(updatedValue: string) => {
-              setExpense(previous => ({...previous, date: updatedValue}));
-            }}
+            onPressIn={() => setIsDatePickerOpened(true)}
             placeholder={'Date'}
             keyboardType={'default'}
             value={date}
@@ -55,6 +55,19 @@ export const Expense: FC<ExpenseProps> = ({onButtonPressed, transaction, transac
       <FireButton
         label={transactionType === 'adding' ? 'Create' : 'Save'}
         onPressed={() => onButtonPressed(expense as Transaction)}
+      />
+      <DatePicker
+        modal
+        open={isDatePickerOpened}
+        date={new Date()}
+        onConfirm={date => {
+          // setOpen(false)
+          setExpense(previous => ({...previous, date: date.toDateString()}));
+          setIsDatePickerOpened(false);
+        }}
+        onCancel={() => {
+          setIsDatePickerOpened(false);
+        }}
       />
     </View>
   );
