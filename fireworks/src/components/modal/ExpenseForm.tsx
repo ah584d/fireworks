@@ -64,15 +64,16 @@ export const Expense: FC<ExpenseProps> = ({onButtonPressed, onDeleteButtonPresse
       <View style={styles.buttonsGroup}>
         {transactionType === 'editing' && (
           <FireButton
-          label={'Delete'}
-          onPressed={() => onDeleteButtonPressed(expense.id)}
-          customStyle={{backgroundColor: mainColors.RED}}
+            label={'Delete'}
+            onPressed={() => onDeleteButtonPressed(expense.id)}
+            customStyle={{backgroundColor: mainColors.RED}}
           />
-          )}
-          <FireButton label={buttonLabel} onPressed={() => onButtonPressed(expense as Transaction)} />
+        )}
+        <FireButton label={buttonLabel} onPressed={() => onButtonPressed(expense as Transaction)} />
       </View>
       <DatePicker
         modal
+        mode={'date'}
         open={isDatePickerOpened}
         date={new Date()}
         onConfirm={dateSelected => {
