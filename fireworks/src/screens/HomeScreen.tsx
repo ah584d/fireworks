@@ -6,13 +6,13 @@ import SVGSearch from '../assets/svg/search.svg';
 import {mainColors} from '../common/themes/colors';
 import {Spacing} from '../common/themes/spacing';
 import {getAggregatedDate} from '../common/utils/businessLogic.utils';
+import {addDecimalMark} from '../common/utils/number.utils';
 import {FireButton} from '../components/buttons/FireButton';
 import {ModalWrapper} from '../components/modal/ModalWrapper';
 import {Table} from '../components/table/Table';
 import {ScreenParams, navRootStackName} from '../navigation/navigation.types';
 import {useFireStore} from '../state/store';
 import {Transaction} from '../types/store.types';
-import { addDecimalMark } from '../common/utils/number.utils';
 
 interface HomeScreenProps {
   route?: RouteProp<ScreenParams, navRootStackName.HOME_SCREEN>;
@@ -23,9 +23,9 @@ export const HomeScreen = ({}: HomeScreenProps): ReactElement => {
   const {account, openModal, setTransactionToEdit, setTransactionType, filteredTransactions, resetFilters} =
     useFireStore(state => state) ?? {};
 
-  const aggregatedData = getAggregatedDate(
-    filteredTransactions.length > 0 ? filteredTransactions : account.transactions
-  );
+  const isFiltersActive = filteredTransactions.length > 0;
+
+  const aggregatedData = getAggregatedDate(isFiltersActive ? filteredTransactions : account.transactions);
 
   const onLongPressCB = (transaction: Transaction): void => {
     setTransactionToEdit(transaction);
@@ -34,7 +34,7 @@ export const HomeScreen = ({}: HomeScreenProps): ReactElement => {
   };
 
   const onFilterButtonPressed = (): void => {
-    if (filteredTransactions.length > 0) {
+    if (isFiltersActive) {
       resetFilters();
     } else {
       setTransactionType('filter');
@@ -42,7 +42,7 @@ export const HomeScreen = ({}: HomeScreenProps): ReactElement => {
     }
   };
 
-  const filterButtonLabel = filteredTransactions.length > 0 ? 'Reset Filters' : 'Filters';
+  const filterButtonLabel = isFiltersActive ? 'Reset' : 'Filters';
 
   const renderTop = (): ReactElement => (
     <View style={styles.topWrapper}>
@@ -56,7 +56,10 @@ export const HomeScreen = ({}: HomeScreenProps): ReactElement => {
         <FireButton
           label={filterButtonLabel}
           onPressed={onFilterButtonPressed}
-          customStyle={{backgroundColor: mainColors.GRAY_EXTRA_LIGHT, borderColor: mainColors.GRAY}}
+          customStyle={{
+            backgroundColor: mainColors.GRAY_EXTRA_LIGHT,
+            borderColor: isFiltersActive ? mainColors.RED : mainColors.GRAY,
+          }}
           labelCustomStyle={{color: undefined}}
           leftIcon={<SVGSearch />}
         />
