@@ -7,7 +7,7 @@ export const ListEmptyComponent = (): ReactElement => {
   return (
     <View style={styles.container}>
       <View style={styles.textWrapper}>
-        <Text style={styles.text}>Still no have expense</Text>
+        <Text style={styles.text}>No expenses yet.</Text>
       </View>
       <Lottie
         style={{
