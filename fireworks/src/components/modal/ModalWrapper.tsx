@@ -1,6 +1,6 @@
-import React, {FC, useEffect, useRef} from 'react';
+import React, {ReactElement, useEffect, useRef} from 'react';
 import {StyleSheet, View} from 'react-native';
-import RBSheet from 'react-native-raw-bottom-sheet';
+import RBSheet from '@lunalee/react-native-raw-bottom-sheet';
 import {SCREEN_HEIGHT} from '../../common/infra/infra.consts';
 import {mainColors} from '../../common/themes/colors';
 import {Spacing} from '../../common/themes/spacing';
@@ -9,9 +9,7 @@ import {Transaction} from '../../types/store.types';
 import {CloseButton} from '../buttons/CloseButton';
 import {Expense} from './ExpenseForm';
 
-interface ModalWrapperProps {}
-
-export const ModalWrapper: FC<ModalWrapperProps> = ({}) => {
+export const ModalWrapper = (): ReactElement => {
   const {
     account,
     addTransaction,
@@ -73,7 +71,7 @@ export const ModalWrapper: FC<ModalWrapperProps> = ({}) => {
     <RBSheet
       ref={refRBSheet}
       height={SCREEN_HEIGHT * 0.92}
-      closeOnDragDown
+      closeOnDragDown={true}
       closeOnPressMask={false}
       keyboardAvoidingViewEnabled
       onClose={onModalClosing}
