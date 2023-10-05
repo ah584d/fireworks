@@ -27,11 +27,9 @@ export const WelcomeScreen = ({navigation}: WelcomeScreenProps): ReactElement =>
 
   const onSubmit = (): void => {
     if (hasUserName(userName)) {
-      console.log(`====> DEBUG userName exists: `, userName);
       const userFromStorage = retrieveUserData<UserAccount>(userName);
       setCurrentAccount(userFromStorage);
     } else {
-      console.log(`====> DEBUG userName does not exists: `, userName);
       createAccount(userName);
     }
 

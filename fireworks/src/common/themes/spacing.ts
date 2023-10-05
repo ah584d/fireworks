@@ -12,12 +12,6 @@ export const Spacing = {
 
   // special sizes
   gutter: 24,
-  headerTopWithoutNotch: 26,
-  headerTopWithNotchIOS: 64,
-  screenBottomPadding: 40,
-  screenBottomPaddingAbsolute: 25,
-  carouselSpaceBetweenCards: 10,
   borderRadius: 50,
   bottomBar: 90,
-  bottomBarAndroid: 70,
 };

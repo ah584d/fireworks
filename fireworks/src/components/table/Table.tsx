@@ -2,7 +2,6 @@ import React, {FC, ReactElement} from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {mainColors} from '../../common/themes/colors';
 import {Spacing} from '../../common/themes/spacing';
-import {dateToFormattedString} from '../../common/utils/date.utils';
 import {AggregatedTransactions, Transaction} from '../../state/store.types';
 
 interface TableProps {
@@ -14,7 +13,7 @@ export const Table: FC<TableProps> = ({aggregatedTransactions, longPressAction})
   const renderItem = ({date, transactions}: AggregatedTransactions): ReactElement => (
     <View style={styles.container}>
       <View style={styles.dateContainer}>
-        <Text style={styles.text}>{dateToFormattedString(date)}</Text>
+        <Text style={styles.text}>{date}</Text>
       </View>
       <View>
         {transactions.map((item: Transaction, index: number) => (
@@ -31,7 +30,14 @@ export const Table: FC<TableProps> = ({aggregatedTransactions, longPressAction})
     </View>
   );
 
-  return <FlatList style={styles.list} data={aggregatedTransactions} showsVerticalScrollIndicator={true} renderItem={({item}) => renderItem(item)} />;
+  return (
+    <FlatList
+      style={styles.list}
+      data={aggregatedTransactions}
+      showsVerticalScrollIndicator={true}
+      renderItem={({item}) => renderItem(item)}
+    />
+  );
 };
 
 const styles = StyleSheet.create({

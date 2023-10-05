@@ -1,8 +1,10 @@
 import {AggregatedTransactions, Transaction, UserAccount} from '../../state/store.types';
 
-export const getMyAccount = (accounts: UserAccount[], name: string | undefined): UserAccount => accounts.filter((account: UserAccount) => account.name === name)?.[0];
+export const getMyAccount = (accounts: UserAccount[], name: string | undefined): UserAccount =>
+  accounts.filter((account: UserAccount) => account.name === name)?.[0];
 
-export const isTransactionComplete = (transaction?: Transaction): boolean => !!transaction?.name && !!transaction?.date && !!transaction?.amount;
+export const isTransactionComplete = (transaction?: Transaction): boolean =>
+  !!transaction?.name && !!transaction?.date && !!transaction?.amount;
 
 export const getAggregatedDate = (transactions: Transaction[]): AggregatedTransactions[] => {
   const aggregatedTransactions: Record<string, AggregatedTransactions> = {};
@@ -19,7 +21,6 @@ export const getAggregatedDate = (transactions: Transaction[]): AggregatedTransa
     aggregatedTransactions[dateKey].transactions.push(transaction);
   });
 
-  // Convert the Map values to an array of AggregatedTransactions
   const aggregatedTransactionsArr: AggregatedTransactions[] = Object.values(aggregatedTransactions);
 
   // Sort the aggregated transactions by date (ascending order)

@@ -4,7 +4,7 @@ module.exports = {
   bracketSpacing: false,
   singleQuote: true,
   tabWidth: 2,
-  printWidth: 1200,
+  printWidth: 120,
   trailingComma: 'es5',
 
   _comment_: 'the 2 followings keys are for lib @trivago/prettier-plugin-sort-imports',

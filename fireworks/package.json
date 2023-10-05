@@ -11,14 +11,14 @@
     "start": "react-native start",
     "start:dev": "concurrently -r 'npm run compile:dev' 'npm run start'",
     "start:reset": "watchman watch-del-all && npm run start -- --reset-cache",
-    "test": "jest  --verbose"
+    "test": "jest --verbose"
   },
   "dependencies": {
     "@react-navigation/bottom-tabs": "^6.5.9",
     "@react-navigation/native": "^6.1.8",
     "@react-navigation/native-stack": "^6.9.14",
     "@react-navigation/stack": "^6.3.18",
-    "dayjs": "^1.11.10",
+    "dayjs": "^1.11.8",
     "react": "18.2.0",
     "react-native": "0.72.5",
     "react-native-mmkv": "^2.10.2",
