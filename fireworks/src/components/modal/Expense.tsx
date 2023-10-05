@@ -3,8 +3,8 @@ import {StyleSheet, Text, TextInput, View} from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import {mainColors} from '../../common/themes/colors';
 import {Spacing} from '../../common/themes/spacing';
-import {Transaction} from '../../state/store.types';
 import {TransactionType} from '../../types/common.types';
+import {Transaction} from '../../types/store.types';
 import {FireButton} from '../buttons/FireButton';
 
 interface ExpenseProps {
@@ -19,7 +19,15 @@ export const Expense: FC<ExpenseProps> = ({onButtonPressed, transaction, transac
 
   const {name, amount, date} = expense ?? {};
 
-  const titleLabel = transactionType === 'adding' ? 'Create Expense' : 'Edit Expense';
+  const titleLabel =
+    transactionType === 'adding' || !transactionType
+      ? 'Create Expense'
+      : transactionType === 'filter'
+      ? 'Filters'
+      : 'Edit Expense';
+  const buttonLabel =
+    transactionType === 'adding' || !transactionType ? 'Create' : transactionType === 'filter' ? 'Filter' : 'Save';
+
   return (
     <View style={styles.container}>
       <View style={styles.form}>
@@ -52,10 +60,7 @@ export const Expense: FC<ExpenseProps> = ({onButtonPressed, transaction, transac
           />
         </View>
       </View>
-      <FireButton
-        label={transactionType === 'adding' ? 'Create' : 'Save'}
-        onPressed={() => onButtonPressed(expense as Transaction)}
-      />
+      <FireButton label={buttonLabel} onPressed={() => onButtonPressed(expense as Transaction)} />
       <DatePicker
         modal
         open={isDatePickerOpened}

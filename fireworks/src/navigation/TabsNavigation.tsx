@@ -55,7 +55,7 @@ export const TabsNavigation = ({route}: TabsNavigationProps): React.ReactElement
       <BottomBar.Screen name={navRootStackName.HOME_SCREEN} component={HomeScreen} options={{headerTitle: userName}} />
       <BottomBar.Screen
         name={navRootStackName.TAB_BUTTON_PLUS}
-        component={ModalWrapper}
+        component={HomeScreen}
         options={{
           tabBarButton: () => <TabBarAdvancedButton onButtonPressed={openModal} />,
         }}

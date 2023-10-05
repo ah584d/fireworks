@@ -1,4 +1,5 @@
-import {AggregatedTransactions, Transaction, UserAccount} from '../../state/store.types';
+import {AggregatedTransactions} from '../../types/common.types';
+import {Transaction, UserAccount} from '../../types/store.types';
 
 export const getMyAccount = (accounts: UserAccount[], name: string | undefined): UserAccount =>
   accounts.filter((account: UserAccount) => account.name === name)?.[0];

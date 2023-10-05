@@ -1,15 +1,25 @@
-import React, {ReactElement, useEffect, useRef, useState} from 'react';
+import React, {FC, useEffect, useRef} from 'react';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {SCREEN_HEIGHT} from '../../common/infra/infra.consts';
 import {mainColors} from '../../common/themes/colors';
 import {useFireStore} from '../../state/store';
-import {Transaction} from '../../state/store.types';
-import {TransactionType} from '../../types/common.types';
+import {Transaction} from '../../types/store.types';
 import {Expense} from './Expense';
 
-export const ModalWrapper = (): ReactElement => {
-  const {account, addTransaction, editTransaction, setTransactionToEdit, transactionToEdit, isModalOpened, closeModal} = useFireStore(state => state) ?? {};
-  const [transactionType, setTransactionType] = useState<TransactionType>('adding');
+interface ModalWrapperProps {}
+
+export const ModalWrapper: FC<ModalWrapperProps> = ({}) => {
+  const {
+    account,
+    addTransaction,
+    editTransaction,
+    setTransactionToEdit,
+    transactionToEdit,
+    isModalOpened,
+    closeModal,
+    transactionType,
+    setTransactionType,
+  } = useFireStore(state => state) ?? {};
 
   useEffect(() => {
     if (isModalOpened) {
@@ -18,10 +28,6 @@ export const ModalWrapper = (): ReactElement => {
       refRBSheet.current?.close();
     }
   }, [isModalOpened]);
-
-  useEffect(() => {
-    setTransactionType(transactionToEdit ? 'editing' : 'adding');
-  }, [transactionToEdit]);
 
   const refRBSheet = useRef<RBSheet | null>(null);
 
@@ -36,6 +42,7 @@ export const ModalWrapper = (): ReactElement => {
 
   const onModalClosing = (): void => {
     setTransactionToEdit(undefined);
+    setTransactionType(undefined);
     closeModal();
   };
   return (
@@ -54,7 +61,7 @@ export const ModalWrapper = (): ReactElement => {
           backgroundColor: mainColors.GRAY_DARK,
         },
       }}>
-      <Expense transactionType={transactionToEdit ? 'editing' : 'adding'} transaction={transactionToEdit} onButtonPressed={onButtonPressedCB} />
+      <Expense transactionType={transactionType} transaction={transactionToEdit} onButtonPressed={onButtonPressedCB} />
     </RBSheet>
   );
 };

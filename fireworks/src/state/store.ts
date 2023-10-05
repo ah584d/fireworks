@@ -1,12 +1,14 @@
 import {create} from 'zustand';
 import {getRandomUUID} from '../common/utils/numbers.utils';
+import {TransactionType} from '../types/common.types';
+import {Transaction, UserAccount} from '../types/store.types';
 import {deleteAccount, storeUser} from './persistentStorage';
-import {Transaction, UserAccount} from './store.types';
 
 export interface FireStoreType {
   isModalOpened: boolean;
   account: UserAccount;
   transactionToEdit: Transaction | undefined;
+  transactionType: TransactionType;
   setCurrentAccount: (userAccount: UserAccount) => void;
   createAccount: (name: string) => void;
   addTransaction: (userName: string, transaction: Transaction) => void;
@@ -16,12 +18,14 @@ export interface FireStoreType {
   openModal: () => void;
   closeModal: () => void;
   setTransactionToEdit: (transaction: Transaction | undefined) => void;
+  setTransactionType: (transactionType: TransactionType | undefined) => void;
 }
 
 export const useFireStore = create<FireStoreType>(set => ({
   account: {} as unknown as UserAccount,
   isModalOpened: false,
   transactionToEdit: undefined,
+  transactionType: 'adding',
   setCurrentAccount: (userAccount: UserAccount) =>
     set(() => {
       return {
@@ -106,6 +110,13 @@ export const useFireStore = create<FireStoreType>(set => ({
     set(() => {
       return {
         transactionToEdit: transaction,
+      };
+    }),
+
+  setTransactionType: (transactionType: TransactionType | undefined) =>
+    set(() => {
+      return {
+        transactionType: transactionType,
       };
     }),
 }));

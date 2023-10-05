@@ -11,8 +11,3 @@ export interface Transaction {
   date: string | undefined;
   amount: number | undefined;
 }
-
-export interface AggregatedTransactions {
-  date: string;
-  transactions: Transaction[];
-}

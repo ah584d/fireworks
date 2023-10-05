@@ -4,14 +4,13 @@ import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {mainColors} from '../common/themes/colors';
 import {Spacing} from '../common/themes/spacing';
-import {getAggregatedDate} from '../common/utils/buzinessLogic.utils';
+import {getAggregatedDate} from '../common/utils/businessLogic.utils';
 import {FireButton} from '../components/buttons/FireButton';
-// import {FloatingButton} from '../components/buttons/FloatingButton';
 import {ModalWrapper} from '../components/modal/ModalWrapper';
 import {Table} from '../components/table/Table';
 import {ScreenParams, navRootStackName} from '../navigation/navigation.types';
 import {useFireStore} from '../state/store';
-import {Transaction} from '../state/store.types';
+import {Transaction} from '../types/store.types';
 
 interface HomeScreenProps {
   route?: RouteProp<ScreenParams, navRootStackName.HOME_SCREEN>;
@@ -19,12 +18,13 @@ interface HomeScreenProps {
 }
 
 export const HomeScreen = ({}: HomeScreenProps): ReactElement => {
-  const {account, openModal, setTransactionToEdit} = useFireStore(state => state) ?? {};
+  const {account, openModal, setTransactionToEdit, setTransactionType} = useFireStore(state => state) ?? {};
 
   const aggregatedData = getAggregatedDate(account.transactions);
 
   const onLongPressCB = (transaction: Transaction): void => {
     setTransactionToEdit(transaction);
+    setTransactionType('editing');
     openModal();
   };
 
@@ -39,7 +39,10 @@ export const HomeScreen = ({}: HomeScreenProps): ReactElement => {
       <View style={styles.filtersWrapper}>
         <FireButton
           label="Filters"
-          onPressed={() => undefined}
+          onPressed={() => {
+            setTransactionType('filter');
+            openModal();
+          }}
           customStyle={{backgroundColor: mainColors.GRAY_EXTRA_LIGHT, borderColor: mainColors.GRAY}}
           labelCustomStyle={{color: undefined}}
         />

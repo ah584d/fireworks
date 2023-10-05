@@ -8,7 +8,7 @@ import {InputField} from '../components/inputField/InputField';
 import {ScreenParams, navRootStackName} from '../navigation/navigation.types';
 import {hasUserName, retrieveUserData} from '../state/persistentStorage';
 import {useFireStore} from '../state/store';
-import {UserAccount} from '../state/store.types';
+import {UserAccount} from '../types/store.types';
 
 interface WelcomeScreenProps {
   route?: RouteProp<ScreenParams, navRootStackName.WELCOME_SCREEN>;

@@ -2,7 +2,8 @@ import React, {FC, ReactElement} from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {mainColors} from '../../common/themes/colors';
 import {Spacing} from '../../common/themes/spacing';
-import {AggregatedTransactions, Transaction} from '../../state/store.types';
+import {AggregatedTransactions} from '../../types/common.types';
+import {Transaction} from '../../types/store.types';
 
 interface TableProps {
   aggregatedTransactions: AggregatedTransactions[];
@@ -45,7 +46,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   rowContainer: {
-    //borderWidth: 1,
   },
   dateContainer: {
     justifyContent: 'center',
