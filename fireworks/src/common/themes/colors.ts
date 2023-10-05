@@ -11,4 +11,5 @@ export const mainColors = {
   PRIMARY_LIGHT: '#FFF7E0',
   PURPLE: '#7B68EE',
   BLUE: '#0000FF',
+  RED: 'red',
 } as const;

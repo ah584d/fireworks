@@ -4,7 +4,7 @@ import {SCREEN_HEIGHT} from '../../common/infra/infra.consts';
 import {mainColors} from '../../common/themes/colors';
 import {useFireStore} from '../../state/store';
 import {Transaction} from '../../types/store.types';
-import {Expense} from './Expense';
+import {Expense} from './ExpenseForm';
 
 interface ModalWrapperProps {}
 
@@ -15,6 +15,7 @@ export const ModalWrapper: FC<ModalWrapperProps> = ({}) => {
     editTransaction,
     setTransactionToEdit,
     transactionToEdit,
+    deleteTransaction,
     isModalOpened,
     closeModal,
     transactionType,
@@ -43,13 +44,17 @@ export const ModalWrapper: FC<ModalWrapperProps> = ({}) => {
         break;
       }
       case 'filter': {
-        console.log(`====> DEBUG filter: `, currentTransaction);
         filterTransactions(currentTransaction);
         break;
       }
       default:
         break;
     }
+    onModalClosing();
+  };
+
+  const onDeleteButtonPressedCB = (transactionId: number): void => {
+    deleteTransaction(account?.name, transactionId);
     onModalClosing();
   };
 
@@ -75,7 +80,12 @@ export const ModalWrapper: FC<ModalWrapperProps> = ({}) => {
           backgroundColor: mainColors.GRAY_DARK,
         },
       }}>
-      <Expense transactionType={transactionType} transaction={transactionToEdit} onButtonPressed={onButtonPressedCB} />
+      <Expense
+        transactionType={transactionType}
+        transaction={transactionToEdit}
+        onButtonPressed={onButtonPressedCB}
+        onDeleteButtonPressed={onDeleteButtonPressedCB}
+      />
     </RBSheet>
   );
 };

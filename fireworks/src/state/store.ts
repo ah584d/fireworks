@@ -80,10 +80,11 @@ export const useFireStore = create<FireStoreType>(set => ({
 
   deleteTransaction: (userName: string, id: number) =>
     set((state: FireStoreType) => {
-      const updatedAccount = {...state.account};
+      const updatedTransactions = state.account.transactions.filter(
+        (transaction: Transaction) => transaction.id !== id
+      );
 
-      updatedAccount.transactions.filter((transaction: Transaction) => transaction.id !== id);
-
+      const updatedAccount = {...state.account, transactions: updatedTransactions};
       storeUser(userName, updatedAccount);
 
       return {

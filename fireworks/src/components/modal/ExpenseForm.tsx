@@ -9,11 +9,12 @@ import {FireButton} from '../buttons/FireButton';
 
 interface ExpenseProps {
   onButtonPressed: (expense: Transaction) => void;
+  onDeleteButtonPressed: (transactionId: number) => void;
   transactionType: TransactionType;
   transaction?: Transaction;
 }
 
-export const Expense: FC<ExpenseProps> = ({onButtonPressed, transaction, transactionType}) => {
+export const Expense: FC<ExpenseProps> = ({onButtonPressed, onDeleteButtonPressed, transaction, transactionType}) => {
   const [expense, setExpense] = useState<Transaction>(transaction ?? ({} as Transaction));
   const [isDatePickerOpened, setIsDatePickerOpened] = useState(false);
 
@@ -60,7 +61,16 @@ export const Expense: FC<ExpenseProps> = ({onButtonPressed, transaction, transac
           />
         </View>
       </View>
-      <FireButton label={buttonLabel} onPressed={() => onButtonPressed(expense as Transaction)} />
+      <View style={styles.buttonsGroup}>
+        {transactionType === 'editing' && (
+          <FireButton
+          label={'Delete'}
+          onPressed={() => onDeleteButtonPressed(expense.id)}
+          customStyle={{backgroundColor: mainColors.RED}}
+          />
+          )}
+          <FireButton label={buttonLabel} onPressed={() => onButtonPressed(expense as Transaction)} />
+      </View>
       <DatePicker
         modal
         open={isDatePickerOpened}
@@ -80,7 +90,6 @@ export const Expense: FC<ExpenseProps> = ({onButtonPressed, transaction, transac
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
     marginTop: Spacing.s32,
@@ -93,7 +102,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   form: {
-    //borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
@@ -104,5 +112,9 @@ const styles = StyleSheet.create({
     width: '100%',
     borderBottomWidth: 1,
     borderBottomColor: mainColors.GRAY_EXTRA_LIGHT,
+  },
+  buttonsGroup: {
+    justifyContent: 'space-between',
+    flex: 0.15,
   },
 });
