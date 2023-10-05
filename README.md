@@ -11,19 +11,21 @@
 4. last version of RN (very fast with hermes!)
 5. cool bottom nav bar design 
 6. react navigation stack
-7. fully typescript
+7. fully typescript (0 compilation error using strict mode and strong types)
+   
+<img src="pictures/ts.jpg" align="left" width="214" height="68" style="background-color:white;"/><br><br><br>
+
 8. filtering
 9. date picker
- 
+
+
 ## Left over
 
 1. Input field validation with regexp
 2. Unit test
-3. Android support
 
-## Decision justification in code
-1. You could find some weird things in my code, I would be glad to explain my decisions, in general I tried to keep the code clean,
-   but due to the limited time that I got (working on evening only :-) ) I did some "shortcut" that I would not have done for prod. application.
+## Reasons Behind Technical Choices
+1. You might find some unusual elements in my code, and I would be happy to explain my decisions. In general, I aimed to maintain clean code. However, due to the limited time available (I only worked on it during the evenings), I took some shortcuts that I wouldn't have taken in a production application.
 
 ## Installation
 
