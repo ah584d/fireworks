@@ -11,7 +11,7 @@ export const getAggregatedDate = (transactions: Transaction[]): AggregatedTransa
   const aggregatedTransactions: Record<string, AggregatedTransactions> = {};
 
   // Iterate through the transactions and group them by date
-  transactions.forEach(transaction => {
+  transactions?.forEach(transaction => {
     const dateKey = transaction.date ?? new Date().toDateString();
     if (!aggregatedTransactions[dateKey]) {
       aggregatedTransactions[dateKey] = {

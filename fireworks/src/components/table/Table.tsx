@@ -4,7 +4,7 @@ import {mainColors} from '../../common/themes/colors';
 import {Spacing} from '../../common/themes/spacing';
 import {AggregatedTransactions} from '../../types/common.types';
 import {Transaction} from '../../types/store.types';
-import { ListEmptyComponent } from '../listEmptyComponent/ListEmptyComponent';
+import {ListEmptyComponent} from '../listEmptyComponent/ListEmptyComponent';
 
 interface TableProps {
   aggregatedTransactions: AggregatedTransactions[];
@@ -23,7 +23,7 @@ export const Table: FC<TableProps> = ({aggregatedTransactions, longPressAction})
             <View style={[styles.expenseWrapper, {borderBottomWidth: index !== transactions.length - 1 ? 1 : 0}]}>
               <Text style={styles.text}>{item.name}</Text>
               <View style={styles.amountWrapper}>
-                <Text style={[styles.amountText, {paddingLeft: 0}]}>$ {item.amount}</Text>
+                <Text style={styles.amountText}>$ {item.amount}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -47,8 +47,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
   },
-  rowContainer: {
-  },
+  rowContainer: {},
   dateContainer: {
     justifyContent: 'center',
     backgroundColor: mainColors.GRAY_EXTRA_LIGHT,
@@ -75,5 +74,6 @@ const styles = StyleSheet.create({
   },
   amountText: {
     textAlignVertical: 'center',
+    paddingLeft: 0,
   },
 });

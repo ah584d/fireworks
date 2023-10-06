@@ -52,7 +52,6 @@ export const ModalWrapper = (): ReactElement => {
       }
       default:
         addTransaction(account?.name, currentTransaction);
-
         break;
     }
     onModalClosing();
