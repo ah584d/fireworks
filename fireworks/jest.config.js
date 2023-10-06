@@ -3,6 +3,7 @@ module.exports = {
   testEnvironment: 'node',
   setupFiles: ['./jest-config/jest-modules-mock.js'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  transformIgnorePatterns: ['node_modules/(?!@react-navigation/bottom-tabs)/'],
   transform: {
       '^.+\\.svg$': 'jest-transformer-svg',
       '^.+\\.(ts|tsx)?$': [
