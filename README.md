@@ -22,7 +22,7 @@
 ## Left over
 
 1. Input field validation with regexp
-2. Unit test
+2. Component tests (using react-native-testing-library), I have just added some Functional Unit Testing
 
 ## Reasons Behind Technical Choices
 1. You might find some unusual elements in my code, and I would be happy to explain my decisions. In general, I aimed to maintain clean code. However, due to the limited time available (I only worked on it during the evenings), I took some shortcuts that I wouldn't have taken in a production application.
