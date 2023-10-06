@@ -30,8 +30,4 @@ const styles = StyleSheet.create({
     borderRadius: 27,
     backgroundColor: mainColors.PURPLE,
   },
-  buttonIcon: {
-    fontSize: 16,
-    color: '#F6F7EB',
-  },
 });
